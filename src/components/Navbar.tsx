@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
@@ -17,7 +18,12 @@ const Navbar = () => {
   }, []);
 
   const mainNavItems = [
+    { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
+    { name: 'Projects', href: '/projects' },
+    { name: 'Events', href: '/events' },
+    { name: 'Gallery', href: '/gallery' },
+    { name: 'Resources', href: '/resources' },
     { name: 'Services', href: '/services' },
     { name: 'Contact', href: '/contact' },
   ];
@@ -41,12 +47,18 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <span className="text-white font-bold text-xl">E</span>
+            <div className="relative w-12 h-12 group-hover:scale-110 transition-transform duration-300">
+              <Image
+                src="/logo/logo.png"
+                alt="Empowered for Change Logo"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
             <div className="hidden sm:block">
               <span className="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors duration-300">
-                EMPOWER FOR CHANGE
+                EMPOWERED FOR CHANGE (E4C)
               </span>
               <div className="text-xs text-gray-500 -mt-1">Women's Rights Organization</div>
             </div>
@@ -60,8 +72,8 @@ const Navbar = () => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`text-gray-700 hover:text-orange-600 transition-colors duration-200 font-medium text-sm relative group px-4 py-2 whitespace-nowrap ${
-                    index < mainNavItems.length - 1 ? 'mr-8' : 'mr-0'
+                  className={`text-gray-700 hover:text-orange-600 transition-colors duration-200 font-medium text-sm relative group px-5 py-2 whitespace-nowrap ${
+                    index < mainNavItems.length - 1 ? 'mr-16' : 'mr-0'
                   }`}
                 >
                   {item.name}
@@ -72,7 +84,7 @@ const Navbar = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center space-x-3 ml-8">
+          <div className="hidden lg:flex items-center space-x-4 ml-10">
             {ctaItems.map((item) => (
               <Link
                 key={item.name}

@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     // Email content
     const mailOptions = {
       from: process.env.SMTP_USER,
-      to: process.env.CONTACT_EMAIL || 'info@empowerforchange.org',
+      to: process.env.CONTACT_EMAIL || 'info@empoweredforchange.or.tz',
       subject: `Contact Form: ${subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
           
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
             <p style="color: #6b7280; font-size: 14px;">
-              This message was sent from the EMPOWER FOR CHANGE website contact form.
+              This message was sent from the EMPOWERED FOR CHANGE (E4C) website contact form.
             </p>
           </div>
         </div>

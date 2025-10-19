@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     // Email content
     const mailOptions = {
       from: process.env.SMTP_USER,
-      to: process.env.DONATION_EMAIL || 'donations@empowerforchange.org',
+      to: process.env.DONATION_EMAIL || 'donations@empoweredforchange.or.tz',
       subject: `New Donation Pledge: $${amount} ${frequency === 'one-time' ? 'one-time' : frequency}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
           
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
             <p style="color: #6b7280; font-size: 14px;">
-              This donation pledge was submitted through the EMPOWER FOR CHANGE website.
+              This donation pledge was submitted through the EMPOWERED FOR CHANGE (E4C) website.
             </p>
           </div>
         </div>

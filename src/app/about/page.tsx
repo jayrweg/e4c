@@ -2,269 +2,511 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useState } from 'react';
 
-export default function About() {
+// Header Banner Component
+const HeaderBanner = () => {
   return (
-    <div className="min-h-screen pt-16">
-      {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-orange-50 to-orange-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative h-96 flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/about/about-preview.jpeg"
+          alt="About Empower for Change"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/60"></div>
+      </div>
+      <div className="relative z-10 text-center text-white">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl md:text-6xl font-bold mb-4"
+        >
+          About Us
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-xl md:text-2xl max-w-3xl mx-auto"
+        >
+          Empowering women and girls of all abilities to realize their reproductive health goals by providing tools for informed decisions
+        </motion.p>
+      </div>
+    </section>
+  );
+};
+
+// Organization Story Component
+const OrganizationStory = () => {
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Our Story
+            </h2>
+            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+              Empowered for Change (E4C) was registered under the non-governmental organizations ACT, 2002 on 25th February 2022 with registration number ooNGO/R/2844 to operate in Tanzania mainland.
+            </p>
+            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+              Since 2022, we have implemented our projects in Dar es Salaam and Dodoma regions, working with the government and collaborating with other partners to ensure increased access to correct information regarding sexual and reproductive issues.
+            </p>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              We work with government and private health facilities to improve quality of SRH services including lifting barriers preventing women and girls from accessing SRH services, and collaborate with our partners to ensure more favourable policy and legal framework that supports equitable access of quality SRH services.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <Image
+                src="/about/about-preview.jpeg"
+                alt="Our team working together"
+                width={600}
+                height={400}
+                className="w-full h-auto"
+              />
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Mission and Vision Component
+const MissionVision = () => {
+  return (
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center"
+            viewport={{ once: true }}
+            className="bg-white rounded-2xl p-8 shadow-lg"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              About <span className="text-orange-600">EMPOWER FOR CHANGE</span>
-            </h1>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              We are a women's rights organization dedicated to empowering women and girls of all abilities 
-              to realize their reproductive health goals through informed decisions and enabling environments.
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4">Our Mission</h3>
+            </div>
+            <p className="text-lg text-gray-600 leading-relaxed text-center">
+              To empower women, girls and marginalized groups with correct knowledge and skills while creating an enabling environment for them to exercise their rights and fulfil their potentials.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-2xl p-8 shadow-lg"
+          >
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </div>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4">Our Vision</h3>
+            </div>
+            <p className="text-lg text-gray-600 leading-relaxed text-center">
+              Empowered women and girls enjoy their rights and fulfil their potentials.
             </p>
           </motion.div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+};
 
-      {/* Mission Section */}
-      <section id="mission" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+// Our Values Component
+const OurValues = () => {
+  const values = [
+    {
+      title: 'Innovative Programming',
+      description: 'Our interventions always seek creation and implementation of new and creative methods and techniques which will enhance our efficiency and effectiveness in reaching more women and girls.',
+      icon: '💡',
+    },
+    {
+      title: 'Focus on Depth',
+      description: 'Prioritizing depth over mere target achievement is paramount. We focus on fostering genuine understanding and empathy among women and girls rather than just hitting numerical goals.',
+      icon: '🎯',
+    },
+    {
+      title: 'Gender Equality & Social Inclusion',
+      description: 'GESI is a cornerstone of our programming. Our activities are designed with both practical and strategic needs of women and girls, and other excluded groups in mind.',
+      icon: '⚖️',
+    },
+    {
+      title: 'Institutionalized Intersectionality',
+      description: 'We understand how multiple forms of inequality compound themselves and create obstacles. Our programs consider how social and political identities result in unique combinations of discrimination and privilege.',
+      icon: '🔄',
+    },
+    {
+      title: 'Training & Mentorship',
+      description: 'We use simplified training materials grounded on adult learning theories and age-appropriate methodologies to make learning more joyful and enjoyable for young people.',
+      icon: '📚',
+    },
+    {
+      title: 'Structured Dialogues',
+      description: 'Our learning approaches are grounded on theories that learning cannot occur without dialogue and reflection. We foster ongoing dialogue and participation to cultivate deeper understanding.',
+      icon: '💬',
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Our Values
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            The principles that guide our work and shape our commitment to empowering women and girls
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {values.map((value, index) => (
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              key={value.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
+              className="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow duration-300"
             >
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Mission</h2>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                To create a world where every woman and girl, regardless of ability, has access to comprehensive 
-                reproductive health services, education, and support. We believe that informed decisions lead to 
-                empowered lives and stronger communities.
+              <div className="text-4xl mb-4">{value.icon}</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                {value.title}
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                {value.description}
               </p>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mt-1">
-                    <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <p className="text-gray-600">Advocate for reproductive health rights and accessibility</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mt-1">
-                    <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <p className="text-gray-600">Provide education and resources for informed decision-making</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mt-1">
-                    <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <p className="text-gray-600">Create supportive communities and safe spaces</p>
-                </div>
-              </div>
             </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
+// Our Approach Component
+const OurApproach = () => {
+  const approaches = [
+    {
+      title: 'Training and Mentorship',
+      description: 'We have designed simplified training materials grounded on adult learning theories and use age-appropriate methodologies to make learning more joyful and enjoyable for young people. Our training packages incorporate ongoing mentorship to ensure gained knowledge is sustained.',
+      image: '/projects/project-education.jpg',
+    },
+    {
+      title: 'Structured Dialogues',
+      description: 'Our learning approaches are grounded on theories that learning cannot occur without dialogue and reflection. We have developed a dialogue guide which stimulates self-expression and interactions among peers to foster deeper understanding.',
+      image: '/projects/project-inclusion.jpg',
+    },
+    {
+      title: 'Domestic Resource Mobilization',
+      description: 'We strongly believe that domestic government spending on family planning should become the mainstay of a country\'s family planning program. Our advocacy efforts focus on working with regional, districts and health facilities to increase allocations and utilization of resources.',
+      image: '/projects/project-advocacy.jpg',
+    },
+    {
+      title: 'Strengthening Women-Led CSOs',
+      description: 'We believe that women and girls are experts of their own needs. Our interventions focus on building the capacity of women and girls led civil society organizations to lead and fully participate in SRH policy making and programming.',
+      image: '/projects/project-education.jpg',
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Our Approach
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Our technical approaches to empowering women and girls and creating lasting positive change in Dar es Salaam and Dodoma regions
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {approaches.map((approach, index) => (
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              key={approach.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="relative"
+              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
-              <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative h-48">
                 <Image
-                  src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                  alt="Women empowerment and solidarity"
+                  src={approach.image}
+                  alt={approach.title}
                   fill
                   className="object-cover"
                 />
               </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  {approach.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {approach.description}
+                </p>
+              </div>
             </motion.div>
-          </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+};
 
-      {/* Impact Section */}
-      <section id="impact" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+// Team Section Component (matching homepage structure)
+const TeamSection = () => {
+  const boardMembers = [
+    {
+      id: 1,
+      name: 'Judith Justine Kweka',
+      role: 'Board Chairperson',
+      image: '/team/judith-justine-kweka.jpg',
+      bio: `Judith Justine is an experienced project manager and a public health specialist with more than eight years of progressive experience of working in the NGO sector both local and international NGOs, covering both the public and private health sectors. Specifically, she has worked on interventions in the areas of integrated Sexual Reproductive Health such as Family Planning, Comprehensive Post Abortion Care, Cervical Cancer, STIs, HIV and AIDS, GBV, and livelihood enhancement. Judith has extensive experience of working with ministries, the Parliament and local government authorities with profound experience across all the six WHO health systems building blocks financing, health workforce, information systems, medical products and technologies, leadership/governance, and service delivery.`,
+    },
+    {
+      id: 2,
+      name: 'Alice Henry Mbowe',
+      role: 'Board Member',
+      image: '/team/alice-henry-mbowe.jpg',
+      bio: `Alice Henry Mbowe is a legal professional holding a bachelor degree in Low from Mzumbe University in Tanzania, with 6 years experience of working as an administration and human resources manager with crown healthcare (T) Ltd. She has extensive experience with the health sector in Tanzania including working directly with both private and public health facilities to ensure availability of medical equipment and devices.`,
+    },
+    {
+      id: 3,
+      name: 'Mwiru Siima',
+      role: 'Board Member',
+      image: '/team/mwiru-siima.jpg',
+      bio: `A dynamic and visionary development professional with over 20 years of experience in the sector, with a master's degree in public health specializing in Medical Sociology, my diverse background encompasses research, monitoring and evaluation (M&E), and program management across various sectors. I possess a proven track record of successful leadership, strategic partnerships, institutional funding, and effective stakeholder engagement. Committed to driving impactful change, I am well-equipped to lead and shape the organization's mission, while fostering a culture of inclusivity, collaboration, and operational excellence.`,
+    },
+    {
+      id: 4,    
+      name: 'Agusta Kinunda',
+      role: 'Board Member',
+      image: '/team/Agusta Kinunda1.jpg',
+      bio: `A Finance and Administration professional with over 10 years' experience working with national and international organization including NGOs. She is certified accountant, with CPA certification from the National Board of Accountants and Auditors (NBAA) in Tanzania. She holds a master's degree in finance and investment. She has worked with Tanzania Postal Bank (TPB) as a Banking Operation Officer, Plan International in Dar es Salaam as an accountant, Marie Stopes Tanzania, in Dar es Salaam as Project Accountant and Hanns R. Neumann Stiftung Africa, in Dar es Salaam as Finance and Administration Manager.`,
+    },
+    {
+      id: 5,
+      name: 'Rita Mbeba',
+      role: 'Board Member',
+      image: '/team/Rita.jpg',
+      bio: `Mrs Rita Mbeba is a public health professional with over 15 years' experience in leading health, women empowerment and development programs in Tanzania. She is currently working with Girls Effect in Tanzania as a country director where is responsible with overseeing and leading the country team and program unit. She is also responsible with managing the startup, design, Implementation, monitoring and evaluation of all projects. Prior to that, Mrs. Rita has worked with Pathfinder international as a Senior Portfolio Technical Advisor- AYSRH at Pathfinder. Prior to that she worked with Marie Stopes Tanzania as a project lead where she was responsible with strategic oversight and portfolio management of all donor-funded projects of varying size and technical scope. Prior to that she worked with Amref Tanzania as a project manager responsible with project management including coordination of project plans, monitor, implement and evaluate project interventions.`,
+    },
+  ];
+
+  const teamMembers = [
+    {
+      id: 6,
+      name: 'Lightness Charles Limbe',
+      role: 'Projects Manager',
+      image: '/team/Lightness Limbe.jpg',
+      bio: `Ms Lightness Limbe is a psychologist and a projects management professional with 4 years of experience in leading donor funded projects. She is currently working with Empowered for Change (E4C) as a projects manager, leading all SRHR, gender, and other development projects ensuring effective project design, planning, and implementation and reporting. She is also responsible with ensuring effective management of donor funding and maintain relationships with government and partners. Prior to that, Ms. Lightness was working with EKAMA Development Foundation as a clinical psychologist and research assistant providing individual and group therapy sessions using evidence-based practices and developing and implementing treatment plans tailored to clients' needs and goals. Ms. Lightness holds a bachelor's degree in Psychology from University of Dar Es Salaam.`,
+    },
+    {
+      id: 7,
+      name: 'Angeline Bathsheba Kwame',
+      role: 'Projects Manager',
+      image: '/team/team-6-zainab.jpg',
+      bio: `A Zoologist and an environmentalist professional with one year of experience in projects management, biodiversity surveys, monitoring and environmental conservation. She is currently working with Empowered for Change (E4C) as a projects manager, leading all environmental, gender, and climate change projects ensuring effective project design, planning, implementation, monitoring, evaluation, reporting and maintain excellent relationships with relevant donors, government and stakeholders. In her role as projects manager, Ms. Angeline has pioneered digital innovations which has resulted in 10 folds increase of the organization reach of women, girls and people with disabilities, creating a pool of over 100 young women climate change makers. Time to time Ms. Angeline is also volunteering with Tanzania National Park (TANAPA) as an environmental ambassador creating awareness to the community of existing national parks. Ms. Angeline holds a bachelor's degree in Applied Zoology from University of Dar Es Salaam.`,
+    },
+  ];
+
+  const [activeMemberId, setActiveMemberId] = useState<number | null>(null);
+  const allMembers = [...boardMembers, ...teamMembers];
+  const activeMember = activeMemberId ? allMembers.find(m => m.id === activeMemberId) : null;
+
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Our Leadership Team
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Dedicated professionals working tirelessly to empower women and girls across Tanzania
+          </p>
+        </motion.div>
+
+        {/* Board Members Section */}
+        <div className="mb-16">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Impact</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Through dedicated advocacy, education, and support, we've made significant strides in advancing women's reproductive health rights.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { number: '8', label: 'Regions', description: 'Active across 8 regions' },
-              { number: '500+', label: 'Women Reached', description: 'Directly empowered women' },
-              { number: '12%', label: 'Budget Increase', description: 'SRH/FP budget allocation' },
-              { number: '17%', label: 'Disability Budget', description: 'Increased for people with disability' }
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="text-center bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-              >
-                <div className="text-4xl font-bold text-orange-600 mb-2">{stat.number}</div>
-                <div className="text-lg font-semibold text-gray-900 mb-2">{stat.label}</div>
-                <div className="text-gray-600">{stat.description}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section id="team" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Team</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Passionate advocates, healthcare professionals, and community leaders working together to create lasting change.
-            </p>
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">Our Board Members</h3>
+            <p className="text-lg text-gray-600">Governance and strategic leadership</p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: 'Dr. Sarah Williams',
-                role: 'Executive Director',
-                image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-                bio: 'Leading advocate for women\'s reproductive health with over 15 years of experience.'
-              },
-              {
-                name: 'Maria Rodriguez',
-                role: 'Program Director',
-                image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-                bio: 'Specialist in community outreach and accessibility programs for women with disabilities.'
-              },
-              {
-                name: 'Aisha Hassan',
-                role: 'Education Coordinator',
-                image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-                bio: 'Dedicated to creating comprehensive educational resources and training programs.'
-              }
-            ].map((member, index) => (
+            {boardMembers.map((member, index) => (
               <motion.div
-                key={index}
+                key={member.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-shadow duration-300"
+                className="bg-gray-50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group hover:-translate-y-2"
               >
-                <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
+                <div className="relative w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden cursor-pointer" onClick={() => setActiveMemberId(member.id)}>
                   <Image
                     src={member.image}
                     alt={member.name}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-110 transition-transform duration-300"
                   />
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm font-semibold">Click for Bio</span>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
-                <p className="text-orange-600 font-semibold mb-3">{member.role}</p>
-                <p className="text-gray-600 text-sm">{member.bio}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">
+                  {member.name}
+                </h3>
+                <p className="text-orange-600 font-semibold mb-4 text-center">
+                  {member.role}
+                </p>
+                <p className="text-gray-500 text-center text-sm">
+                  Click image to view full bio
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* Values Section */}
-      <section className="py-20 bg-gradient-to-r from-orange-600 to-orange-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Team Members Section */}
+        <div>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12"
           >
-            <h2 className="text-4xl font-bold text-white mb-6">Our Values</h2>
-            <p className="text-xl text-orange-100 max-w-3xl mx-auto">
-              The principles that guide everything we do and every decision we make.
-            </p>
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">Our Team</h3>
+            <p className="text-lg text-gray-600">Project management and implementation</p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                title: 'Inclusivity',
-                description: 'We believe every woman deserves access to reproductive health services, regardless of ability or background.',
-                icon: (
-                  <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                )
-              },
-              {
-                title: 'Empowerment',
-                description: 'We provide tools and knowledge for women to make informed decisions about their reproductive health.',
-                icon: (
-                  <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                )
-              },
-              {
-                title: 'Advocacy',
-                description: 'We fight for policy changes and systemic improvements that benefit all women and girls.',
-                icon: (
-                  <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                )
-              },
-              {
-                title: 'Community',
-                description: 'We build supportive networks where women can share experiences and find strength together.',
-                icon: (
-                  <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                )
-              }
-            ].map((value, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {teamMembers.map((member, index) => (
               <motion.div
-                key={index}
+                key={member.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20"
+                className="bg-gray-50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group hover:-translate-y-2"
               >
-                <div className="text-white mb-4 flex justify-center">
-                  {value.icon}
+                <div className="relative w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden cursor-pointer" onClick={() => setActiveMemberId(member.id)}>
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm font-semibold">Click for Bio</span>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">{value.title}</h3>
-                <p className="text-orange-100">{value.description}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">
+                  {member.name}
+                </h3>
+                <p className="text-orange-600 font-semibold mb-4 text-center">
+                  {member.role}
+                </p>
+                <p className="text-gray-500 text-center text-sm">
+                  Click image to view full bio
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
-      </section>
+
+        {/* Bio Modal */}
+        {activeMember && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setActiveMemberId(null)}>
+            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 relative max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+              <button aria-label="Close" className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl" onClick={() => setActiveMemberId(null)}>
+                ✕
+              </button>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="relative w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
+                  <Image src={activeMember.image} alt={activeMember.name} fill className="object-cover" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">{activeMember.name}</h3>
+                  <p className="text-orange-600 font-semibold text-lg">{activeMember.role}</p>
+                </div>
+              </div>
+              <div className="prose prose-gray max-w-none">
+                <p className="text-gray-700 leading-relaxed text-base">{activeMember.bio}</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+// Main About Page Component
+export default function About() {
+  return (
+    <div className="min-h-screen">
+      <HeaderBanner />
+      <OrganizationStory />
+      <MissionVision />
+      <OurValues />
+      <OurApproach />
+      <TeamSection />
     </div>
   );
 }

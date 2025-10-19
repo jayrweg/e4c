@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     // Email content
     const mailOptions = {
       from: process.env.SMTP_USER,
-      to: process.env.VOLUNTEER_EMAIL || 'volunteers@empowerforchange.org',
+      to: process.env.VOLUNTEER_EMAIL || 'volunteers@empoweredforchange.or.tz',
       subject: `New Volunteer Application: ${firstName} ${lastName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
           
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
             <p style="color: #6b7280; font-size: 14px;">
-              This volunteer application was submitted through the EMPOWER FOR CHANGE website.
+              This volunteer application was submitted through the EMPOWERED FOR CHANGE (E4C) website.
             </p>
           </div>
         </div>

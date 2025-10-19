@@ -43,6 +43,10 @@ body {
   line-height: 1.6;
 }
 
+/* Simple utility spacing between generic sections and containers */
+section { margin-top: 0; }
+.container, .max-w-7xl { scroll-margin-top: 6rem; }
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

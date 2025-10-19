@@ -1,48 +1,69 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useState } from 'react';
 
-export default function Volunteer() {
+// Header Banner Component
+const HeaderBanner = () => {
+  return (
+    <section className="relative h-96 flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/projects/project-education.jpg"
+          alt="Volunteer with us"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/60"></div>
+      </div>
+      <div className="relative z-10 text-center text-white">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl md:text-6xl font-bold mb-4"
+        >
+          Volunteer With Us
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-xl md:text-2xl max-w-3xl mx-auto"
+        >
+          Join our mission as a volunteer and help empower women and girls across Tanzania
+        </motion.p>
+      </div>
+    </section>
+  );
+};
+
+// Volunteer Form Component
+const VolunteerForm = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
     phone: '',
-    age: '',
-    interests: [] as string[],
-    availability: '',
-    experience: '',
-    motivation: '',
-    emergencyContact: '',
-    emergencyPhone: ''
+    areaOfInterest: '',
+    message: '',
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.target;
-    setFormData({
-      ...formData,
-      interests: checked 
-        ? [...formData.interests, value]
-        : formData.interests.filter(interest => interest !== value)
-    });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+    setSubmitStatus('idle');
+
     try {
       const response = await fetch('/api/volunteer', {
         method: 'POST',
@@ -55,356 +76,399 @@ export default function Volunteer() {
       if (response.ok) {
         setSubmitStatus('success');
         setFormData({
-          firstName: '',
-          lastName: '',
+          name: '',
           email: '',
           phone: '',
-          age: '',
-          interests: [],
-          availability: '',
-          experience: '',
-          motivation: '',
-          emergencyContact: '',
-          emergencyPhone: ''
+          areaOfInterest: '',
+          message: '',
         });
       } else {
         setSubmitStatus('error');
       }
     } catch (error) {
+      console.error('Error submitting form:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const volunteerOpportunities = [
-    {
-      title: 'Community Outreach',
-      description: 'Help us reach women in underserved communities through mobile clinics and outreach programs.',
-      timeCommitment: '4-8 hours/week',
-      requirements: 'Valid driver\'s license, communication skills'
-    },
-    {
-      title: 'Education Facilitator',
-      description: 'Lead workshops and educational sessions on reproductive health topics.',
-      timeCommitment: '6-10 hours/week',
-      requirements: 'Teaching experience preferred, health background helpful'
-    },
-    {
-      title: 'Support Group Leader',
-      description: 'Facilitate support groups and create safe spaces for women to share experiences.',
-      timeCommitment: '3-6 hours/week',
-      requirements: 'Counseling background, empathy and listening skills'
-    },
-    {
-      title: 'Administrative Support',
-      description: 'Help with office tasks, data entry, and organizational support.',
-      timeCommitment: '5-10 hours/week',
-      requirements: 'Computer skills, attention to detail'
-    }
+  const areasOfInterest = [
+    'Community Outreach',
+    'Health Education',
+    'Disability Inclusion',
+    'Youth Programs',
+    'Policy Advocacy',
+    'Event Organization',
+    'Administrative Support',
+    'Translation Services',
+    'Other',
   ];
 
   return (
-    <div className="min-h-screen pt-16">
-      {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-orange-50 to-orange-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Join Our <span className="text-orange-600">Mission</span>
-            </h1>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Become a volunteer and help us empower women and girls of all abilities. 
-              Your time and skills can make a real difference in our communities.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Join Our Volunteer Team
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Your skills, passion, and time can make a real difference in the lives of women and girls. Fill out the form below to get started.
+          </p>
+        </motion.div>
 
-      {/* Volunteer Opportunities */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">Volunteer Opportunities</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Find the perfect way to contribute your time and skills to our mission.
-            </p>
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="bg-white rounded-2xl shadow-xl p-8"
+        >
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-300"
+                  placeholder="Enter your full name"
+                />
+              </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {volunteerOpportunities.map((opportunity, index) => (
+              <div>
+                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-300"
+                  placeholder="Enter your email address"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Phone Number *
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-300"
+                  placeholder="Enter your phone number"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="areaOfInterest" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Area of Interest *
+                </label>
+                <select
+                  id="areaOfInterest"
+                  name="areaOfInterest"
+                  value={formData.areaOfInterest}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-300"
+                >
+                  <option value="">Select an area of interest</option>
+                  {areasOfInterest.map((area) => (
+                    <option key={area} value={area}>
+                      {area}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                Tell us about yourself and why you want to volunteer *
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                required
+                rows={6}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-300 resize-none"
+                placeholder="Share your background, skills, availability, and motivation for volunteering with us..."
+              />
+            </div>
+
+            {submitStatus === 'success' && (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="bg-gray-50 p-8 rounded-2xl hover:shadow-lg transition-shadow duration-300"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-green-50 border border-green-200 rounded-lg p-4"
               >
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{opportunity.title}</h3>
-                <p className="text-gray-600 mb-4">{opportunity.description}</p>
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="text-sm font-medium text-gray-700">Time Commitment: {opportunity.timeCommitment}</span>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <svg className="w-5 h-5 text-orange-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="text-sm text-gray-600">Requirements: {opportunity.requirements}</span>
-                  </div>
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <p className="text-green-800 font-medium">
+                    Thank you for your interest in volunteering! We'll be in touch soon.
+                  </p>
                 </div>
               </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Volunteer Form */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-2xl shadow-lg p-8"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Volunteer Application</h2>
-            
-            {submitStatus === 'success' && (
-              <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                Thank you for your interest in volunteering! We'll contact you within 48 hours to discuss next steps.
-              </div>
             )}
 
             {submitStatus === 'error' && (
-              <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                Sorry, there was an error submitting your application. Please try again or contact us directly.
-              </div>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-red-50 border border-red-200 rounded-lg p-4"
+              >
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 text-red-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  <p className="text-red-800 font-medium">
+                    There was an error submitting your application. Please try again.
+                  </p>
+                </div>
+              </motion.div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Personal Information */}
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Personal Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                      First Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      required
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                      Last Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      required
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
-                    />
-                  </div>
+            <motion.button
+              type="submit"
+              disabled={isSubmitting}
+              whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+              whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+              className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-semibold py-4 px-8 rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? (
+                <div className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Submitting...
                 </div>
+              ) : (
+                'Submit Volunteer Application'
+              )}
+            </motion.button>
+          </form>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      required
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
-                    />
-                  </div>
-                </div>
+// Volunteer Opportunities Component
+const VolunteerOpportunities = () => {
+  const opportunities = [
+    {
+      title: 'Community Outreach Volunteer',
+      description: 'Help us reach women and girls in local communities through education and awareness programs.',
+      requirements: ['Good communication skills', 'Cultural sensitivity', 'Flexible schedule'],
+      timeCommitment: '4-8 hours per week',
+      icon: '🌍',
+    },
+    {
+      title: 'Health Education Facilitator',
+      description: 'Lead workshops and training sessions on reproductive health topics for women and girls.',
+      requirements: ['Health background preferred', 'Public speaking skills', 'Training materials provided'],
+      timeCommitment: '6-10 hours per week',
+      icon: '🏥',
+    },
+    {
+      title: 'Disability Inclusion Advocate',
+      description: 'Work to ensure our programs are accessible and inclusive for women and girls with disabilities.',
+      requirements: ['Disability awareness', 'Advocacy experience', 'Accessibility knowledge'],
+      timeCommitment: '3-6 hours per week',
+      icon: '♿',
+    },
+    {
+      title: 'Youth Program Coordinator',
+      description: 'Support our youth empowerment programs and mentor young women and girls.',
+      requirements: ['Youth work experience', 'Mentoring skills', 'Background check required'],
+      timeCommitment: '5-8 hours per week',
+      icon: '👧',
+    },
+    {
+      title: 'Administrative Support',
+      description: 'Help with office tasks, data entry, and organizational support to keep our programs running smoothly.',
+      requirements: ['Computer skills', 'Attention to detail', 'Organizational abilities'],
+      timeCommitment: '4-6 hours per week',
+      icon: '📋',
+    },
+    {
+      title: 'Event Volunteer',
+      description: 'Assist with organizing and running events, workshops, and community activities.',
+      requirements: ['Event planning skills', 'Team player', 'Flexible availability'],
+      timeCommitment: 'Event-based',
+      icon: '🎉',
+    },
+  ];
 
-                <div className="mt-6">
-                  <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-2">
-                    Age *
-                  </label>
-                  <input
-                    type="number"
-                    id="age"
-                    name="age"
-                    required
-                    min="16"
-                    value={formData.age}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
-                  />
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Volunteer Opportunities
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Explore the different ways you can contribute to our mission and make a meaningful impact
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {opportunities.map((opportunity, index) => (
+            <motion.div
+              key={opportunity.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow duration-300"
+            >
+              <div className="text-center mb-4">
+                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">{opportunity.icon}</span>
                 </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  {opportunity.title}
+                </h3>
               </div>
-
-              {/* Interests */}
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Areas of Interest</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {[
-                    'Community Outreach',
-                    'Education & Training',
-                    'Support Groups',
-                    'Administrative Support',
-                    'Event Planning',
-                    'Social Media',
-                    'Fundraising',
-                    'Translation Services'
-                  ].map((interest) => (
-                    <label key={interest} className="flex items-center space-x-3">
-                      <input
-                        type="checkbox"
-                        value={interest}
-                        checked={formData.interests.includes(interest)}
-                        onChange={handleCheckboxChange}
-                        className="w-4 h-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
-                      />
-                      <span className="text-gray-700">{interest}</span>
-                    </label>
+              
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                {opportunity.description}
+              </p>
+              
+              <div className="mb-4">
+                <h4 className="font-semibold text-gray-900 mb-2">Requirements:</h4>
+                <ul className="space-y-1">
+                  {opportunity.requirements.map((requirement, reqIndex) => (
+                    <li key={reqIndex} className="flex items-center text-sm text-gray-600">
+                      <svg className="w-4 h-4 text-orange-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {requirement}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
-
-              {/* Availability */}
-              <div>
-                <label htmlFor="availability" className="block text-sm font-medium text-gray-700 mb-2">
-                  Availability *
-                </label>
-                <textarea
-                  id="availability"
-                  name="availability"
-                  required
-                  rows={3}
-                  value={formData.availability}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
-                  placeholder="Please describe your availability (days, times, etc.)"
-                />
+              
+              <div className="text-sm text-orange-600 font-semibold">
+                Time Commitment: {opportunity.timeCommitment}
               </div>
-
-              {/* Experience */}
-              <div>
-                <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-2">
-                  Relevant Experience
-                </label>
-                <textarea
-                  id="experience"
-                  name="experience"
-                  rows={4}
-                  value={formData.experience}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
-                  placeholder="Tell us about your relevant experience, skills, or background"
-                />
-              </div>
-
-              {/* Motivation */}
-              <div>
-                <label htmlFor="motivation" className="block text-sm font-medium text-gray-700 mb-2">
-                  Why do you want to volunteer with us? *
-                </label>
-                <textarea
-                  id="motivation"
-                  name="motivation"
-                  required
-                  rows={4}
-                  value={formData.motivation}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
-                  placeholder="Share your motivation for volunteering with EMPOWER FOR CHANGE"
-                />
-              </div>
-
-              {/* Emergency Contact */}
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Emergency Contact</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="emergencyContact" className="block text-sm font-medium text-gray-700 mb-2">
-                      Emergency Contact Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="emergencyContact"
-                      name="emergencyContact"
-                      required
-                      value={formData.emergencyContact}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="emergencyPhone" className="block text-sm font-medium text-gray-700 mb-2">
-                      Emergency Contact Phone *
-                    </label>
-                    <input
-                      type="tel"
-                      id="emergencyPhone"
-                      name="emergencyPhone"
-                      required
-                      value={formData.emergencyPhone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-orange-600 text-white font-semibold py-4 px-6 rounded-lg hover:bg-orange-700 disabled:bg-orange-400 disabled:cursor-not-allowed transition-colors duration-200 transform hover:scale-105"
-              >
-                {isSubmitting ? 'Submitting...' : 'Submit Application'}
-              </button>
-            </form>
-          </motion.div>
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+};
+
+// Benefits Component
+const VolunteerBenefits = () => {
+  const benefits = [
+    {
+      title: 'Make a Real Impact',
+      description: 'Contribute to meaningful change in the lives of women and girls across Tanzania.',
+      icon: '💪',
+    },
+    {
+      title: 'Develop New Skills',
+      description: 'Gain valuable experience in community work, health education, and advocacy.',
+      icon: '🎯',
+    },
+    {
+      title: 'Join a Supportive Community',
+      description: 'Connect with like-minded individuals who share your passion for women\'s empowerment.',
+      icon: '🤝',
+    },
+    {
+      title: 'Flexible Commitment',
+      description: 'Choose opportunities that fit your schedule and interests.',
+      icon: '⏰',
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Why Volunteer With Us?
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Volunteering with Empower for Change offers numerous benefits and opportunities for personal and professional growth
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {benefits.map((benefit, index) => (
+            <motion.div
+              key={benefit.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow duration-300"
+            >
+              <div className="text-4xl mb-4">{benefit.icon}</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                {benefit.title}
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                {benefit.description}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Main Volunteer Page Component
+export default function Volunteer() {
+  return (
+    <div className="min-h-screen">
+      <HeaderBanner />
+      <VolunteerForm />
+      <VolunteerOpportunities />
+      <VolunteerBenefits />
     </div>
   );
 }
