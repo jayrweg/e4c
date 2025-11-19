@@ -234,7 +234,7 @@ const OurApproach = () => {
     {
       title: 'Domestic Resource Mobilization',
       description: 'We strongly believe that domestic government spending on family planning should become the mainstay of a country\'s family planning program. Our advocacy efforts focus on working with regional, districts and health facilities to increase allocations and utilization of resources.',
-      image: '/about/domestic.jpg',
+      image: '/about/domestic.png',
     },
     {
       title: 'Strengthening Women-Led CSOs',
