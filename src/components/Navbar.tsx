@@ -3,11 +3,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,15 +70,30 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center">
             {/* Main Navigation */}
             <div className="flex items-center gap-2">
-              {mainNavItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-orange-600 border border-gray-300 hover:bg-orange-600 hover:text-white hover:border-orange-600 transition-all duration-200 font-medium text-sm px-4 py-2 rounded-lg whitespace-nowrap"
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {mainNavItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`relative text-sm px-4 py-2 rounded-lg whitespace-nowrap transition-all duration-200 ${
+                      isActive
+                        ? 'bg-orange-600 text-white font-bold border-orange-600'
+                        : 'text-orange-600 border border-gray-300 hover:bg-orange-600 hover:text-white hover:border-orange-600 font-medium'
+                    }`}
+                  >
+                    {item.name}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute -bottom-1 left-0 right-0 h-1 bg-orange-600 rounded-full"
+                        initial={false}
+                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
             </div>
           </div>
 
@@ -139,16 +156,23 @@ const Navbar = () => {
               <div className="px-2 pt-4 pb-6 space-y-1">
                 {/* Main Navigation */}
                 <div className="mb-6">
-                  {mainNavItems.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="block px-3 py-3 text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-lg font-medium transition-colors duration-200"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
+                  {mainNavItems.map((item) => {
+                    const isActive = pathname === item.href;
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className={`relative block px-3 py-3 rounded-lg transition-colors duration-200 ${
+                          isActive
+                            ? 'text-orange-600 bg-orange-50 font-bold border-l-4 border-orange-600'
+                            : 'text-gray-700 hover:text-orange-600 hover:bg-orange-50 font-medium'
+                        }`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    );
+                  })}
                 </div>
 
                 {/* CTA Buttons */}
