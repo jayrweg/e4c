@@ -67,17 +67,14 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center">
             {/* Main Navigation */}
-            <div className="flex items-center">
-              {mainNavItems.map((item, index) => (
+            <div className="flex items-center gap-2">
+              {mainNavItems.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`text-gray-700 hover:text-orange-600 transition-colors duration-200 font-medium text-sm relative group px-5 py-2 whitespace-nowrap ${
-                    index < mainNavItems.length - 1 ? 'mr-16' : 'mr-0'
-                  }`}
+                  className="text-orange-600 border border-gray-300 hover:bg-orange-600 hover:text-white hover:border-orange-600 transition-all duration-200 font-medium text-sm px-4 py-2 rounded-lg whitespace-nowrap"
                 >
                   {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-600 group-hover:w-full transition-all duration-300"></span>
                 </Link>
               ))}
             </div>

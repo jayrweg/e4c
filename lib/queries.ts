@@ -2,107 +2,163 @@ import { groq } from 'next-sanity'
 
 // Projects queries
 export const getProjects = groq`
-  *[_type == "project"] | order(_createdAt desc) {
+  *[_type == "project"] | order(publishedAt desc) {
     _id,
     title,
     slug,
-    description,
-    image,
+    excerpt,
+    mainImage,
     status,
-    category,
-    participants,
-    duration,
-    impact,
-    region,
+    location,
+    beneficiaries,
     startDate,
-    funding,
-    featured
+    endDate,
+    partners,
+    featured,
+    publishedAt
+  }
+`
+
+export const getProjectBySlug = groq`
+  *[_type == "project" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    description,
+    mainImage,
+    status,
+    location,
+    beneficiaries,
+    startDate,
+    endDate,
+    partners,
+    gallery,
+    featured,
+    publishedAt
   }
 `
 
 export const getFeaturedProjects = groq`
-  *[_type == "project" && featured == true] | order(_createdAt desc) [0...3] {
+  *[_type == "project" && featured == true] | order(publishedAt desc) [0...3] {
     _id,
     title,
     slug,
-    description,
-    image,
+    excerpt,
+    mainImage,
     status,
-    category,
-    participants,
-    duration,
-    impact,
-    region,
+    location,
+    beneficiaries,
     startDate,
-    funding
+    endDate,
+    partners,
+    publishedAt
   }
 `
 
 // Events queries
 export const getEvents = groq`
-  *[_type == "event"] | order(date desc) {
+  *[_type == "event"] | order(eventDate desc) {
     _id,
     title,
     slug,
-    description,
-    image,
-    date,
-    time,
+    excerpt,
+    mainImage,
+    eventDate,
+    endDate,
     location,
-    category,
+    venue,
+    eventType,
     capacity,
-    price,
-    registrationUrl,
-    featured
+    registrationRequired,
+    registrationLink,
+    status,
+    featured,
+    publishedAt
   }
 `
 
 export const getFeaturedEvents = groq`
-  *[_type == "event" && featured == true] | order(date desc) [0...4] {
+  *[_type == "event" && featured == true] | order(eventDate desc) [0...4] {
     _id,
     title,
     slug,
-    description,
-    image,
-    date,
-    time,
+    excerpt,
+    mainImage,
+    eventDate,
+    endDate,
     location,
-    category,
+    venue,
+    eventType,
     capacity,
-    price,
-    registrationUrl
+    registrationRequired,
+    registrationLink,
+    status,
+    publishedAt
   }
 `
 
 // Resources queries
 export const getResources = groq`
-  *[_type == "resource"] | order(publishDate desc) {
+  *[_type == "resource"] | order(publishedAt desc) {
     _id,
     title,
     slug,
     description,
-    image,
+    thumbnail,
     category,
-    type,
-    downloadUrl,
-    downloadCount,
-    publishDate,
-    featured
+    resourceType,
+    fileUpload,
+    externalLink,
+    videoUrl,
+    author,
+    language,
+    tags,
+    downloadable,
+    featured,
+    publishedAt
+  }
+`
+
+export const getResourceBySlug = groq`
+  *[_type == "resource" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    description,
+    content,
+    thumbnail,
+    category,
+    resourceType,
+    fileUpload,
+    externalLink,
+    videoUrl,
+    author,
+    language,
+    tags,
+    downloadable,
+    featured,
+    publishedAt
   }
 `
 
 export const getFeaturedResources = groq`
-  *[_type == "resource" && featured == true] | order(publishDate desc) [0...6] {
+  *[_type == "resource" && featured == true] | order(publishedAt desc) [0...6] {
     _id,
     title,
     slug,
     description,
-    image,
+    thumbnail,
     category,
-    type,
-    downloadUrl,
-    downloadCount,
-    publishDate
+    resourceType,
+    fileUpload,
+    externalLink,
+    videoUrl,
+    author,
+    language,
+    tags,
+    downloadable,
+    publishedAt
   }
 `
 
@@ -173,5 +229,37 @@ export const getFeaturedServices = groq`
     targetAudience,
     duration,
     impact
+  }
+`
+
+// Gallery queries
+export const getGalleryImages = groq`
+  *[_type == "gallery"] | order(publishedAt desc) {
+    _id,
+    title,
+    image,
+    caption,
+    category,
+    tags,
+    location,
+    date,
+    photographer,
+    featured,
+    publishedAt
+  }
+`
+
+export const getFeaturedGalleryImages = groq`
+  *[_type == "gallery" && featured == true] | order(publishedAt desc) [0...6] {
+    _id,
+    title,
+    image,
+    caption,
+    category,
+    tags,
+    location,
+    date,
+    photographer,
+    publishedAt
   }
 `

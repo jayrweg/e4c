@@ -5,13 +5,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Partners from '@/components/Partners';
+import { client } from '@/lib/sanity';
+import { urlForImage } from '@/lib/sanity';
+import { getFeaturedProjects } from '@/lib/queries';
 
 // Hero Section Component (slideshow)
 const HeroSection = () => {
   const slides = [
-    { src: "/slides/slide-1.jpg", alt: "Women empowerment 1" },
-    { src: "/slides/slide-2.jpg", alt: "Women empowerment 2" },
-    { src: "/slides/slide-3.jpg", alt: "Women empowerment 3" },
+    { src: "/slides/slide11.jpg", alt: "Women empowerment 1" },
+    { src: "/slides/slide22.png", alt: "Women empowerment 2" },
+    { src: "/slides/slide33.png", alt: "Women empowerment 3" },
   ];
   const [index, setIndex] = useState(0);
 
@@ -240,7 +243,7 @@ const AboutPreview = () => {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <Image
-                src="/about/about-preview.jpeg"
+                src="/about/slide-2.jpg"
                 alt="Women supporting each other"
                 width={600}
                 height={400}
@@ -255,30 +258,30 @@ const AboutPreview = () => {
 };
 
 // Projects Preview Component
-const ProjectsPreview = () => {
-  const projects = [
+const ProjectsPreview = ({ projects = [] }: { projects?: any[] }) => {
+  // Fallback data if no projects from Sanity
+  const fallbackProjects = [
     {
       id: 1,
       title: 'Reproductive Health Education',
       description: 'Comprehensive education programs for women and girls about reproductive health, family planning, and informed decision-making.',
       image: '/projects/project-education.jpg',
-      // TODO: Replace with Sanity CMS data
     },
     {
       id: 2,
       title: 'Disability Inclusion Initiative',
       description: 'Creating accessible programs and support systems for women and girls with disabilities to access reproductive health services.',
       image: '/projects/project-inclusion.jpg',
-      // TODO: Replace with Sanity CMS data
     },
     {
       id: 3,
       title: 'Community Advocacy',
       description: 'Building community support networks and advocating for policy changes that benefit women and girls across Tanzania.',
       image: '/projects/project-advocacy.jpg',
-      // TODO: Replace with Sanity CMS data
     },
   ];
+
+  const displayProjects = projects.length > 0 ? projects : fallbackProjects;
 
   return (
     <section className="py-20 bg-gray-50">
@@ -291,15 +294,15 @@ const ProjectsPreview = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Our Projects & Events
+            Our Projects 
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover our ongoing initiatives and upcoming events that are making a difference in communities across Tanzania
+          <p className="text-xl text-gray-600 max-w-8xl mx-auto">
+            Discover our ongoing initiatives and upcoming projects that are making a difference in communities across Tanzania
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+          {displayProjects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
@@ -405,15 +408,15 @@ const TeamSection = () => {
     {
       id: 6,
       name: 'Lightness Charles Limbe',
-      role: 'Projects Manager',
+      role: 'Program Manager',
       image: '/team/Lightness-Limbe.jpg',
       bio: `Ms Lightness Limbe is a psychologist and a projects management professional with 4 years of experience in leading donor funded projects. She is currently working with Empowered for Change (E4C) as a projects manager, leading all SRHR, gender, and other development projects ensuring effective project design, planning, and implementation and reporting. She is also responsible with ensuring effective management of donor funding and maintain relationships with government and partners. Prior to that, Ms. Lightness was working with EKAMA Development Foundation as a clinical psychologist and research assistant providing individual and group therapy sessions using evidence-based practices and developing and implementing treatment plans tailored to clients' needs and goals. Ms. Lightness holds a bachelor's degree in Psychology from University of Dar Es Salaam.`,
     },
     {
       id: 7,
       name: 'Angeline Bathsheba Kwame',
-      role: 'Projects Manager',
-      image: '/team/team-6-zainab.jpg',
+      role: 'Project Manager',
+      image: '/team/angeline.jpg',
       bio: `A Zoologist and an environmentalist professional with one year of experience in projects management, biodiversity surveys, monitoring and environmental conservation. She is currently working with Empowered for Change (E4C) as a projects manager, leading all environmental, gender, and climate change projects ensuring effective project design, planning, implementation, monitoring, evaluation, reporting and maintain excellent relationships with relevant donors, government and stakeholders. In her role as projects manager, Ms. Angeline has pioneered digital innovations which has resulted in 10 folds increase of the organization reach of women, girls and people with disabilities, creating a pool of over 100 young women climate change makers. Time to time Ms. Angeline is also volunteering with Tanzania National Park (TANAPA) as an environmental ambassador creating awareness to the community of existing national parks. Ms. Angeline holds a bachelor's degree in Applied Zoology from University of Dar Es Salaam.`,
     },
   ];
@@ -435,7 +438,7 @@ const TeamSection = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Our Leadership Team
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-6xl mx-auto">
             Dedicated professionals working tirelessly to empower women and girls across Tanzania
           </p>
         </motion.div>
@@ -564,16 +567,7 @@ const TeamSection = () => {
 };
 
 // Gallery Preview Component
-const GalleryPreview = () => {
-  const galleryImages = [
-    '/gallery/gallery-1.jpg',
-    '/gallery/gallery-2.jpg',
-    '/gallery/gallery-3.jpg',
-    '/gallery/gallery-4.jpg',
-    '/gallery/gallery-5.jpg',
-    '/gallery/gallery-6.jpg',
-  ];
-
+const GalleryPreview = ({ galleryImages = [] }: { galleryImages?: any[] }) => {
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -587,30 +581,36 @@ const GalleryPreview = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Our Gallery
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-1xl mx-auto">
             Moments of impact, empowerment, and positive change in our communities
           </p>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {galleryImages.map((image, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="relative h-32 md:h-40 rounded-lg overflow-hidden group cursor-pointer"
-            >
-              <Image
-                src={image}
-                alt={`Gallery image ${index + 1}`}
-                fill
-                className="object-cover group-hover:scale-110 transition-transform duration-300"
-              />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
-            </motion.div>
-          ))}
+          {galleryImages.length > 0 ? (
+            galleryImages.map((image, index) => (
+              <motion.div
+                key={image.id || index}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="relative h-32 md:h-40 rounded-lg overflow-hidden group cursor-pointer"
+              >
+                <Image
+                  src={image.image}
+                  alt={image.title || `Gallery image ${index + 1}`}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+              </motion.div>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-8 text-gray-500">
+              No gallery images available yet. Check back soon!
+            </div>
+          )}
         </div>
 
         <motion.div
@@ -651,7 +651,7 @@ const CallToAction = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Join us in empowering women and girls across Tanzania
           </h2>
-          <p className="text-xl text-orange-100 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-orange-100 mb-8 max-w-1xl mx-auto">
             Together, we can create a world where every woman and girl has the tools, knowledge, and support they need to make informed decisions about their reproductive health.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -684,16 +684,183 @@ const CallToAction = () => {
   );
 };
 
+// Featured Events Component
+const FeaturedEvents = ({ events = [] }: { events?: any[] }) => {
+  if (events.length === 0) return null;
+
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Upcoming Events
+          </h2>
+          <p className="text-xl text-gray-600 max-w-1xl mx-auto">
+            Join us at our upcoming events and workshops making a difference in women's health and empowerment
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {events.slice(0, 3).map((event, index) => (
+            <motion.div
+              key={event.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
+            >
+              <div className="relative h-48 overflow-hidden">
+                <Image
+                  src={event.image}
+                  alt={event.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute top-4 right-4">
+                  <span className="bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-semibold capitalize">
+                    {event.category}
+                  </span>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="flex items-center text-orange-600 mb-3 text-sm">
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span className="font-semibold">{event.date}</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors duration-300">
+                  {event.title}
+                </h3>
+                <p className="text-gray-600 mb-4 line-clamp-2">
+                  {event.description}
+                </p>
+                <div className="flex items-center text-gray-600 text-sm">
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span>{event.location}</span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="text-center mt-12"
+        >
+          <Link
+            href="/events"
+            className="inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-colors duration-300 shadow-lg hover:shadow-xl"
+          >
+            View All Events
+          </Link>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
 // Main Homepage Component
 export default function Home() {
+  const [featuredProjects, setFeaturedProjects] = useState([]);
+  const [featuredGallery, setFeaturedGallery] = useState([]);
+  const [featuredEvents, setFeaturedEvents] = useState([]);
+
+  useEffect(() => {
+    async function loadProjects() {
+      try {
+        const projects = await client.fetch(getFeaturedProjects);
+        const formatted = projects.map((project: any) => ({
+          id: project._id,
+          title: project.title,
+          description: project.excerpt || 'No description available',
+          image: project.mainImage ? urlForImage(project.mainImage).url() : '/projects/project-education.jpg',
+        }));
+        setFeaturedProjects(formatted);
+      } catch (error) {
+        console.error('Error loading featured projects:', error);
+      }
+    }
+
+    async function loadFeaturedGallery() {
+      try {
+        const query = `*[_type == "gallery" && featured == true] | order(_createdAt desc) [0...6] {
+          _id,
+          title,
+          description,
+          image,
+          category
+        }`;
+        const images = await client.fetch(query);
+        const formatted = images.map((img: any) => ({
+          id: img._id,
+          title: img.title,
+          description: img.description,
+          image: img.image ? urlForImage(img.image).url() : '/gallery/gallery-1.jpg',
+          category: img.category || 'community',
+        }));
+        setFeaturedGallery(formatted);
+      } catch (error) {
+        console.error('Error loading featured gallery:', error);
+      }
+    }
+
+    async function loadFeaturedEvents() {
+      try {
+        const query = `*[_type == "event" && featured == true] | order(date desc) [0...3] {
+          _id,
+          title,
+          description,
+          image,
+          category,
+          date,
+          time,
+          location
+        }`;
+        const eventsData = await client.fetch(query);
+        const formatted = eventsData.map((evt: any) => ({
+          id: evt._id,
+          title: evt.title,
+          description: typeof evt.description === 'string' ? evt.description : 'Join us for this exciting event',
+          image: evt.image ? urlForImage(evt.image).url() : 'https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&auto=format&fit=crop&w=1976&q=80',
+          category: evt.category || 'community',
+          date: evt.date ? new Date(evt.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'TBA',
+          time: evt.time || 'TBA',
+          location: evt.location || 'TBA',
+        }));
+        setFeaturedEvents(formatted);
+      } catch (error) {
+        console.error('Error loading featured events:', error);
+      }
+    }
+
+    loadProjects();
+    loadFeaturedGallery();
+    loadFeaturedEvents();
+  }, []);
+
   return (
     <div className="min-h-screen space-y-20">
       <HeroSection />
       <ImpactStats />
       <AboutPreview />
-      <ProjectsPreview />
+      <ProjectsPreview projects={featuredProjects} />
+      <FeaturedEvents events={featuredEvents} />
       <TeamSection />
-      <GalleryPreview />
+      <GalleryPreview galleryImages={featuredGallery} />
       <Partners />
       <CallToAction />
     </div>

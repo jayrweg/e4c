@@ -72,18 +72,6 @@ const ServiceCard = ({ service, index }: { service: any; index: number }) => {
           </div>
         ))}
       </div>
-      
-      <div className="text-center">
-        <Link
-          href={service.link}
-          className="inline-flex items-center text-orange-600 hover:text-orange-700 font-semibold transition-colors duration-300"
-        >
-          Learn More
-          <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </Link>
-      </div>
     </motion.div>
   );
 };
@@ -218,8 +206,8 @@ const ServicesGrid = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Our Comprehensive Services
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We offer a wide range of programs and services designed to meet the diverse needs of women and girls across Tanzania
+          <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+            We offer programs and services that support the diverse needs of women and girls across Tanzania.
           </p>
         </motion.div>
 
@@ -271,7 +259,7 @@ const ServiceApproach = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Our Service Approach
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-5xl mx-auto">
             Our approach to service delivery is guided by principles that ensure maximum impact and meaningful change
           </p>
         </motion.div>
@@ -341,7 +329,7 @@ const ServiceImpact = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Service Impact
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-5xl mx-auto">
             Our services are making a measurable difference in the lives of women and girls across Tanzania
           </p>
         </motion.div>
@@ -387,7 +375,7 @@ const CallToAction = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Ready to Access Our Services?
           </h2>
-          <p className="text-xl text-orange-100 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-orange-100 mb-8 max-w-5xl mx-auto">
             Whether you're looking for education, support, or advocacy, we're here to help you access the services you need
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

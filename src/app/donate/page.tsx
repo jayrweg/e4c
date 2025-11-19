@@ -105,7 +105,7 @@ const DonationForm = () => {
 
   return (
     <section className="py-20 bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -116,7 +116,7 @@ const DonationForm = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Make a Donation
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-8xl mx-auto">
             Your support enables us to continue our vital work empowering women and girls across Tanzania. Every contribution makes a difference.
           </p>
         </motion.div>
@@ -126,7 +126,7 @@ const DonationForm = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="bg-white rounded-2xl shadow-xl p-8"
+          className="bg-white rounded-2xl shadow-xl p-8 md:p-12"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -443,7 +443,7 @@ const DonationMethods = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Ways to Donate
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-8xl mx-auto">
             Choose the donation method that works best for you. All donations are used to support our programs and create positive change.
           </p>
         </motion.div>
@@ -528,7 +528,7 @@ const Transparency = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Transparency & Accountability
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-8xl mx-auto">
             We are committed to transparency and accountability in all our operations and use of donor funds
           </p>
         </motion.div>
@@ -566,7 +566,6 @@ export default function Donate() {
     <div className="min-h-screen">
       <HeaderBanner />
       <DonationForm />
-      <ImpactOfDonations />
       <DonationMethods />
       <Transparency />
     </div>

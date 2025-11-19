@@ -107,7 +107,7 @@ const VolunteerForm = () => {
 
   return (
     <section className="py-20 bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -118,7 +118,7 @@ const VolunteerForm = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Join Our Volunteer Team
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-6xl mx-auto">
             Your skills, passion, and time can make a real difference in the lives of women and girls. Fill out the form below to get started.
           </p>
         </motion.div>
@@ -128,7 +128,7 @@ const VolunteerForm = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="bg-white rounded-2xl shadow-xl p-8"
+          className="bg-white rounded-2xl shadow-xl p-8 md:p-12"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -340,7 +340,7 @@ const VolunteerOpportunities = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Volunteer Opportunities
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-6xl mx-auto">
             Explore the different ways you can contribute to our mission and make a meaningful impact
           </p>
         </motion.div>
@@ -431,7 +431,7 @@ const VolunteerBenefits = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Why Volunteer With Us?
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-6xl mx-auto">
             Volunteering with Empower for Change offers numerous benefits and opportunities for personal and professional growth
           </p>
         </motion.div>

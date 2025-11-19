@@ -188,7 +188,7 @@ const OurValues = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Our Values
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-6xl mx-auto">
             The principles that guide our work and shape our commitment to empowering women and girls
           </p>
         </motion.div>
@@ -224,22 +224,22 @@ const OurApproach = () => {
     {
       title: 'Training and Mentorship',
       description: 'We have designed simplified training materials grounded on adult learning theories and use age-appropriate methodologies to make learning more joyful and enjoyable for young people. Our training packages incorporate ongoing mentorship to ensure gained knowledge is sustained.',
-      image: '/projects/project-education.jpg',
+      image: '/about/training.jpg',
     },
     {
       title: 'Structured Dialogues',
       description: 'Our learning approaches are grounded on theories that learning cannot occur without dialogue and reflection. We have developed a dialogue guide which stimulates self-expression and interactions among peers to foster deeper understanding.',
-      image: '/projects/project-inclusion.jpg',
+      image: '/about/dialogue.jpg',
     },
     {
       title: 'Domestic Resource Mobilization',
       description: 'We strongly believe that domestic government spending on family planning should become the mainstay of a country\'s family planning program. Our advocacy efforts focus on working with regional, districts and health facilities to increase allocations and utilization of resources.',
-      image: '/projects/project-advocacy.jpg',
+      image: '/about/domestic.jpg',
     },
     {
       title: 'Strengthening Women-Led CSOs',
       description: 'We believe that women and girls are experts of their own needs. Our interventions focus on building the capacity of women and girls led civil society organizations to lead and fully participate in SRH policy making and programming.',
-      image: '/projects/project-education.jpg',
+      image: '/about/women.jpg',
     },
   ];
 
@@ -256,7 +256,7 @@ const OurApproach = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Our Approach
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-8xl mx-auto">
             Our technical approaches to empowering women and girls and creating lasting positive change in Dar es Salaam and Dodoma regions
           </p>
         </motion.div>
@@ -339,15 +339,15 @@ const TeamSection = () => {
     {
       id: 6,
       name: 'Lightness Charles Limbe',
-      role: 'Projects Manager',
-      image: '/team/Lightness Limbe.jpg',
+      role: 'Program Manager',
+      image: '/team/Lightness-Limbe.jpg',
       bio: `Ms Lightness Limbe is a psychologist and a projects management professional with 4 years of experience in leading donor funded projects. She is currently working with Empowered for Change (E4C) as a projects manager, leading all SRHR, gender, and other development projects ensuring effective project design, planning, and implementation and reporting. She is also responsible with ensuring effective management of donor funding and maintain relationships with government and partners. Prior to that, Ms. Lightness was working with EKAMA Development Foundation as a clinical psychologist and research assistant providing individual and group therapy sessions using evidence-based practices and developing and implementing treatment plans tailored to clients' needs and goals. Ms. Lightness holds a bachelor's degree in Psychology from University of Dar Es Salaam.`,
     },
     {
       id: 7,
       name: 'Angeline Bathsheba Kwame',
-      role: 'Projects Manager',
-      image: '/team/team-6-zainab.jpg',
+      role: 'Project Manager',
+      image: '/team/angeline.jpg',
       bio: `A Zoologist and an environmentalist professional with one year of experience in projects management, biodiversity surveys, monitoring and environmental conservation. She is currently working with Empowered for Change (E4C) as a projects manager, leading all environmental, gender, and climate change projects ensuring effective project design, planning, implementation, monitoring, evaluation, reporting and maintain excellent relationships with relevant donors, government and stakeholders. In her role as projects manager, Ms. Angeline has pioneered digital innovations which has resulted in 10 folds increase of the organization reach of women, girls and people with disabilities, creating a pool of over 100 young women climate change makers. Time to time Ms. Angeline is also volunteering with Tanzania National Park (TANAPA) as an environmental ambassador creating awareness to the community of existing national parks. Ms. Angeline holds a bachelor's degree in Applied Zoology from University of Dar Es Salaam.`,
     },
   ];
@@ -369,7 +369,7 @@ const TeamSection = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Our Leadership Team
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-1xl mx-auto">
             Dedicated professionals working tirelessly to empower women and girls across Tanzania
           </p>
         </motion.div>

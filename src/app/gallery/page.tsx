@@ -1,8 +1,7 @@
-'use client';
-
-import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { useState } from 'react';
+import { fetchGalleryImages } from '@/lib/api';
+import { urlForImage } from '@/lib/sanity';
+import GalleryClient from './GalleryClient';
 
 // Header Banner Component
 const HeaderBanner = () => {
@@ -17,161 +16,41 @@ const HeaderBanner = () => {
         />
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
-      <div className="relative z-10 text-center text-white">
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-4xl md:text-6xl font-bold mb-4"
-        >
+      <div className="relative z-10 text-center text-white px-4">
+        <h1 className="text-4xl md:text-6xl font-bold mb-4">
           Our Gallery
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-xl md:text-2xl max-w-3xl mx-auto"
-        >
+        </h1>
+        <p className="text-xl md:text-2xl max-w-6xl mx-auto">
           Moments of impact, empowerment, and positive change in our communities
-        </motion.p>
+        </p>
       </div>
     </section>
   );
 };
 
-// Gallery Filter Component
-const GalleryFilter = ({ activeFilter, setActiveFilter }: { activeFilter: string; setActiveFilter: (filter: string) => void }) => {
-  const filters = [
-    { id: 'all', label: 'All Photos' },
-    { id: 'events', label: 'Events' },
-    { id: 'workshops', label: 'Workshops' },
-    { id: 'community', label: 'Community' },
-    { id: 'team', label: 'Team' },
-    { id: 'impact', label: 'Impact' },
-  ];
+// Main Gallery Page Component (Server Component)
+export default async function Gallery() {
+  // Fetch gallery images from Sanity CMS
+  let galleryImages = [];
+  try {
+    galleryImages = await fetchGalleryImages();
+  } catch (error) {
+    console.error('Error fetching gallery images:', error);
+  }
 
-  return (
-    <div className="flex flex-wrap justify-center gap-4 mb-12">
-      {filters.map((filter) => (
-        <button
-          key={filter.id}
-          onClick={() => setActiveFilter(filter.id)}
-          className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-            activeFilter === filter.id
-              ? 'bg-orange-600 text-white shadow-lg'
-              : 'bg-white text-gray-600 hover:bg-orange-50 hover:text-orange-600 border border-gray-200'
-          }`}
-        >
-          {filter.label}
-        </button>
-      ))}
-    </div>
-  );
-};
+  // Format gallery data for client component
+  const formattedImages = galleryImages.map((image: any) => ({
+    id: image._id,
+    src: image.image ? urlForImage(image.image).url() : '/gallery/gallery-1.jpg',
+    alt: image.title,
+    title: image.title,
+    description: image.description,
+    category: image.category || 'community',
+    tags: [image.category?.toLowerCase() || 'community'],
+  }));
 
-// Lightbox Component
-const Lightbox = ({ isOpen, onClose, image, images, currentIndex, setCurrentIndex }: {
-  isOpen: boolean;
-  onClose: () => void;
-  image: any;
-  images: any[];
-  currentIndex: number;
-  setCurrentIndex: (index: number) => void;
-}) => {
-  const nextImage = () => {
-    setCurrentIndex((currentIndex + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setCurrentIndex((currentIndex - 1 + images.length) % images.length);
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-        onClick={onClose}
-      >
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.8, opacity: 0 }}
-          className="relative max-w-6xl max-h-full"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Close Button */}
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 z-10 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors duration-300"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-
-          {/* Navigation Buttons */}
-          {images.length > 1 && (
-            <>
-              <button
-                onClick={prevImage}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors duration-300"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={nextImage}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors duration-300"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </>
-          )}
-
-          {/* Image */}
-          <div className="relative">
-            <Image
-              src={images[currentIndex].src}
-              alt={images[currentIndex].alt}
-              width={1200}
-              height={800}
-              className="max-w-full max-h-[80vh] object-contain rounded-lg"
-            />
-            
-            {/* Image Info */}
-            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white p-4 rounded-b-lg">
-              <h3 className="text-lg font-semibold mb-1">{images[currentIndex].title}</h3>
-              <p className="text-sm opacity-90">{images[currentIndex].description}</p>
-              {images.length > 1 && (
-                <p className="text-xs opacity-75 mt-2">
-                  {currentIndex + 1} of {images.length}
-                </p>
-              )}
-            </div>
-          </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
-};
-
-// Gallery Grid Component
-const GalleryGrid = () => {
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  // TODO: Replace with Sanity CMS data fetching
-  // This is sample data - in production, fetch from Sanity CMS
-  const galleryImages = [
+  // Fallback data if no images in Sanity yet
+  const fallbackImages = [
     {
       id: 1,
       src: '/gallery/gallery-1.jpg',
@@ -282,175 +161,13 @@ const GalleryGrid = () => {
     },
   ];
 
-  const filteredImages = activeFilter === 'all' 
-    ? galleryImages 
-    : galleryImages.filter(image => image.tags.includes(activeFilter));
+  // Use Sanity data if available, otherwise use fallback
+  const displayImages = formattedImages.length > 0 ? formattedImages : fallbackImages;
 
-  const openLightbox = (index: number) => {
-    setCurrentImageIndex(index);
-    setLightboxOpen(true);
-  };
-
-  return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Moments of Impact
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Explore our gallery to see the faces, places, and moments that define our mission to empower women and girls
-          </p>
-        </motion.div>
-
-        <GalleryFilter activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredImages.map((image, index) => (
-            <motion.div
-              key={image.id}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="relative group cursor-pointer"
-              onClick={() => openLightbox(index)}
-            >
-              <div className="relative h-64 rounded-lg overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
-                
-                {/* Overlay Content */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-white/90 text-gray-900 px-4 py-2 rounded-lg">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Image Info */}
-              <div className="mt-3">
-                <h3 className="font-semibold text-gray-900 group-hover:text-orange-600 transition-colors duration-300">
-                  {image.title}
-                </h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  {image.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {filteredImages.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-12"
-          >
-            <p className="text-gray-500 text-lg">No images found for the selected category.</p>
-          </motion.div>
-        )}
-
-        {/* Lightbox */}
-        <Lightbox
-          isOpen={lightboxOpen}
-          onClose={() => setLightboxOpen(false)}
-          image={filteredImages[currentImageIndex]}
-          images={filteredImages}
-          currentIndex={currentImageIndex}
-          setCurrentIndex={setCurrentImageIndex}
-        />
-      </div>
-    </section>
-  );
-};
-
-// Gallery Statistics Component
-const GalleryStats = () => {
-  const stats = [
-    {
-      number: '500+',
-      label: 'Photos Captured',
-      icon: '📸',
-    },
-    {
-      number: '50+',
-      label: 'Events Documented',
-      icon: '📅',
-    },
-    {
-      number: '1,000+',
-      label: 'Lives Touched',
-      icon: '❤️',
-    },
-    {
-      number: '8',
-      label: 'Regions Covered',
-      icon: '🌍',
-    },
-  ];
-
-  return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Our Impact in Numbers
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Every photo tells a story of empowerment, growth, and positive change
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow duration-300"
-            >
-              <div className="text-4xl mb-4">{stat.icon}</div>
-              <div className="text-4xl md:text-5xl font-bold text-orange-600 mb-2">
-                {stat.number}
-              </div>
-              <div className="text-gray-600 font-medium">{stat.label}</div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// Main Gallery Page Component
-export default function Gallery() {
   return (
     <div className="min-h-screen">
       <HeaderBanner />
-      <GalleryGrid />
-      <GalleryStats />
+      <GalleryClient images={displayImages} />
     </div>
   );
 }

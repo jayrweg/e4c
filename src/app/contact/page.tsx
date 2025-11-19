@@ -30,7 +30,7 @@ const HeaderBanner = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-xl md:text-2xl max-w-3xl mx-auto"
+          className="text-xl md:text-2xl max-w-5xl mx-auto"
         >
           We'd love to hear from you. Reach out to us for questions, partnerships, or support.
         </motion.p>
@@ -433,7 +433,6 @@ export default function Contact() {
     <div className="min-h-screen">
       <HeaderBanner />
       <ContactForm />
-      <MapPlaceholder />
       <FAQ />
     </div>
   );

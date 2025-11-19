@@ -14,11 +14,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create transporter (you'll need to configure this with your email service)
-    const transporter = nodemailer.createTransporter({
+    // Create transporter
+    const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: false,
+      port: parseInt(process.env.SMTP_PORT || '465'),
+      secure: true,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     // Email content
     const mailOptions = {
       from: process.env.SMTP_USER,
-      to: process.env.CONTACT_EMAIL || 'info@empoweredforchange.or.tz',
+      to: 'rwegasirajackson11@gmail.com',
       subject: `Contact Form: ${subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

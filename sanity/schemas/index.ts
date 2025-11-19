@@ -4,6 +4,7 @@ import { resource } from './resource'
 import { testimonial } from './testimonial'
 import { teamMember } from './teamMember'
 import { service } from './service'
+import { gallery } from './gallery'
 
 export const schemaTypes = [
   project,
@@ -12,4 +13,5 @@ export const schemaTypes = [
   testimonial,
   teamMember,
   service,
+  gallery,
 ]

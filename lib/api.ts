@@ -11,6 +11,8 @@ import {
   getTeamMembers,
   getServices,
   getFeaturedServices,
+  getGalleryImages,
+  getFeaturedGalleryImages,
 } from './queries'
 
 // Projects
@@ -61,4 +63,13 @@ export async function fetchServices() {
 
 export async function fetchFeaturedServices() {
   return await client.fetch(getFeaturedServices)
+}
+
+// Gallery
+export async function fetchGalleryImages() {
+  return await client.fetch(getGalleryImages)
+}
+
+export async function fetchFeaturedGalleryImages() {
+  return await client.fetch(getFeaturedGalleryImages)
 }
