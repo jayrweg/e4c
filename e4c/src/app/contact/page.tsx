@@ -64,7 +64,7 @@ const ContactForm = () => {
     setSubmitStatus('idle');
 
     // Google Apps Script URL - REPLACE WITH YOUR ACTUAL URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbw8iyfvzBWKHQR9JpILQrJdjueuu8jOl7FIdEGWc4nk9QZxYwvXMn7vjlcd-jR2JGWoKQ/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxQ5iWkXHmxM6YSiIVsfgZtTVb9pIC89nrinOxDlNSIwh_ZWXGswKbh15RBL1jFonM9iA/exec';
 
     try {
       const response = await fetch(scriptURL, {
