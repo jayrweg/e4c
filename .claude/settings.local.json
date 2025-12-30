@@ -28,7 +28,8 @@
       "Bash(cmd.exe /c \"dir /b C:\\\\Users\\\\USER\\\\Desktop\\\\*e4c*\")",
       "Bash(cmd.exe /c \"dir /b \"\"C:\\\\DISK D\\\\New folder\\\\E4C\"\"\")",
       "Bash(git init:*)",
-      "Bash(git remote add:*)"
+      "Bash(git remote add:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []
