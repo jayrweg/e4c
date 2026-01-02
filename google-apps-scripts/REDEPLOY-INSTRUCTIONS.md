@@ -63,7 +63,7 @@ Both scripts now:
 - ✅ Handle CORS preflight requests (OPTIONS method)
 - ✅ Include proper CORS headers in all responses
 - ✅ Allow requests from any origin (including localhost)
-- ✅ Send emails to the correct address: `empoweredforchangetz@gmail.com`
+- ✅ Send emails to the correct address: `rwegasirajackson11@gmail.com`
 
 ---
 

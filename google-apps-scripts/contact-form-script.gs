@@ -17,7 +17,7 @@
  */
 
 // Configuration
-const NOTIFICATION_EMAIL = 'empoweredforchangetz@gmail.com'; // Email to receive notifications
+const NOTIFICATION_EMAIL = 'rwegasirajackson11@gmail.com'; // Email to receive notifications
 
 /**
  * Handles POST requests from the contact form
@@ -61,25 +61,10 @@ function doPost(e) {
 }
 
 /**
- * Handles OPTIONS requests for CORS preflight
- */
-function doOptions(e) {
-  return createCORSResponse();
-}
-
-/**
  * Handles GET requests (for testing)
  */
 function doGet(e) {
-  return ContentService.createTextOutput(
-    JSON.stringify({
-      status: 'success',
-      message: 'E4C Contact Form Script is running. Use POST to submit messages.'
-    })
-  ).setMimeType(ContentService.MimeType.JSON)
-   .setHeader('Access-Control-Allow-Origin', '*')
-   .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-   .setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  return createResponse(true, 'E4C Contact Form Script is running. Use POST to submit messages.');
 }
 
 /**
@@ -92,22 +77,7 @@ function createResponse(success, message) {
   };
 
   return ContentService.createTextOutput(JSON.stringify(response))
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader('Access-Control-Allow-Origin', '*')
-    .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
-}
-
-/**
- * Creates a CORS preflight response
- */
-function createCORSResponse() {
-  return ContentService.createTextOutput('')
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader('Access-Control-Allow-Origin', '*')
-    .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-    .setHeader('Access-Control-Allow-Headers', 'Content-Type')
-    .setHeader('Access-Control-Max-Age', '86400');
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 /**
