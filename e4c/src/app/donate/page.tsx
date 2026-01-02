@@ -10,7 +10,7 @@ const HeaderBanner = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/gallery/gallery-2.webp"
+          src="/gallery/gallery-2.jpg"
           alt="Support our work"
           fill
           className="object-cover"

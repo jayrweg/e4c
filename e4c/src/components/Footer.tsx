@@ -40,7 +40,7 @@ const Footer = () => {
             <div className="flex items-center space-x-3 mb-4">
               <div className="relative w-12 h-12">
                 <Image
-                  src="/logo/logo.webp"
+                  src="/logo/logo.png"
                   alt="Empowered for Change Logo"
                   fill
                   className="object-contain"
