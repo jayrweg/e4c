@@ -9,24 +9,7 @@ import { client } from '@/lib/sanity';
 import { urlForImage } from '@/lib/sanity';
 
 // Hero Section Component (slideshow)
-const HeroSection = () => {
-  const slides = [
-    {
-      src: "/slides/slide11.webp",
-      alt: "Women empowerment 1",
-      message: "Empowered women make informed decisions about their bodies and health leading to healthier pregnancies and better reproductive health outcomes."
-    },
-    {
-      src: "/slides/slide22.webp",
-      alt: "Women empowerment 2",
-      message: "Empowered women have full control over their reproductive choices, they can plan their careers and families better, which positively impacts their ability to contribute to and benefit from economic growth."
-    },
-    {
-      src: "/slides/slide33.webp",
-      alt: "Women empowerment 3",
-      message: "Empowered women advocate for their rights and challenge discriminatory policies and practices."
-    },
-  ];
+const HeroSection = ({ slides }: { slides: any[] }) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -42,13 +25,13 @@ const HeroSection = () => {
       <div className="absolute inset-0 z-0">
         {slides.map((s, i) => (
           <motion.div
-            key={s.src}
+            key={s.image}
             initial={{ opacity: 0 }}
             animate={{ opacity: i === index ? 1 : 0 }}
             transition={{ duration: 0.8 }}
             className="absolute inset-0"
           >
-            <Image src={s.src} alt={s.alt} fill className="object-cover" priority={i === 0} />
+            <Image src={s.image} alt={s.title} fill className="object-cover" priority={i === 0} />
           </motion.div>
         ))}
         <div className="absolute inset-0 bg-black/50"></div>
@@ -385,64 +368,12 @@ const NewsAndArticles = ({ articles = [] }: { articles?: any[] }) => {
 };
 
 // Team Section Component with click-to-bio modal
-const TeamSection = () => {
-  const boardMembers = [
-    {
-      id: 1,
-      name: 'Judith Justine Kweka',
-      role: 'Board Chairperson',
-      image: '/team/judith-justine-kweka.webp',
-      bio: `Judith Justine is an experienced project manager and a public health specialist with more than eight years of progressive experience of working in the NGO sector both local and international NGOs, covering both the public and private health sectors. Specifically, she has worked on interventions in the areas of integrated Sexual Reproductive Health such as Family Planning, Comprehensive Post Abortion Care, Cervical Cancer, STIs, HIV and AIDS, GBV, and livelihood enhancement. Judith has extensive experience of working with ministries, the Parliament and local government authorities with profound experience across all the six WHO health systems building blocks financing, health workforce, information systems, medical products and technologies, leadership/governance, and service delivery.`,
-    },
-    {
-      id: 2,
-      name: 'Alice Henry Mbowe',
-      role: 'Board Member',
-      image: '/team/alice-henry-mbowe.webp',
-      bio: `Alice Henry Mbowe is a legal professional holding a bachelor degree in Low from Mzumbe University in Tanzania, with 6 years experience of working as an administration and human resources manager with crown healthcare (T) Ltd. She has extensive experience with the health sector in Tanzania including working directly with both private and public health facilities to ensure availability of medical equipment and devices.`,
-    },
-    {
-      id: 3,
-      name: 'Mwiru Siima',
-      role: 'Board Member',
-      image: '/team/mwiru-siima.webp',
-      bio: `A dynamic and visionary development professional with over 20 years of experience in the sector, with a master's degree in public health specializing in Medical Sociology, my diverse background encompasses research, monitoring and evaluation (M&E), and program management across various sectors. I possess a proven track record of successful leadership, strategic partnerships, institutional funding, and effective stakeholder engagement. Committed to driving impactful change, I am well-equipped to lead and shape the organization's mission, while fostering a culture of inclusivity, collaboration, and operational excellence.`,
-    },
-    {
-      id: 4,    
-      name: 'Agusta Kinunda',
-      role: 'Board Member',
-      image: '/team/Agusta Kinunda1.webp',
-      bio: `A Finance and Administration professional with over 10 years' experience working with national and international organization including NGOs. She is certified accountant, with CPA certification from the National Board of Accountants and Auditors (NBAA) in Tanzania. She holds a master's degree in finance and investment. She has worked with Tanzania Postal Bank (TPB) as a Banking Operation Officer, Plan International in Dar es Salaam as an accountant, Marie Stopes Tanzania, in Dar es Salaam as Project Accountant and Hanns R. Neumann Stiftung Africa, in Dar es Salaam as Finance and Administration Manager.`,
-    },
-    {
-      id: 5,
-      name: 'Rita Mbeba',
-      role: 'Board Member',
-      image: '/team/Rita mbeba.webp',
-      bio: `Mrs Rita Mbeba is a public health professional with over 15 years' experience in leading health, women empowerment and development programs in Tanzania. She is currently working with Girls Effect in Tanzania as a country director where is responsible with overseeing and leading the country team and program unit. She is also responsible with managing the startup, design, Implementation, monitoring and evaluation of all projects. Prior to that, Mrs. Rita has worked with Pathfinder international as a Senior Portfolio Technical Advisor- AYSRH at Pathfinder. Prior to that she worked with Marie Stopes Tanzania as a project lead where she was responsible with strategic oversight and portfolio management of all donor-funded projects of varying size and technical scope. Prior to that she worked with Amref Tanzania as a project manager responsible with project management including coordination of project plans, monitor, implement and evaluate project interventions.`,
-    },
-  ];
+const TeamSection = ({ teamMembers }: { teamMembers: any[] }) => {
+  const boardMembers = teamMembers.filter(m => m.memberType === 'board');
+  const teamStaff = teamMembers.filter(m => m.memberType === 'team');
 
-  const teamMembers = [
-    {
-      id: 6,
-      name: 'Lightness Charles Limbe',
-      role: 'Program Manager',
-      image: '/team/Lightness-Limbe.webp',
-      bio: `Ms Lightness Limbe is a psychologist and a projects management professional with 4 years of experience in leading donor funded projects. She is currently working with Empowered for Change (E4C) as a projects manager, leading all SRHR, gender, and other development projects ensuring effective project design, planning, and implementation and reporting. She is also responsible with ensuring effective management of donor funding and maintain relationships with government and partners. Prior to that, Ms. Lightness was working with EKAMA Development Foundation as a clinical psychologist and research assistant providing individual and group therapy sessions using evidence-based practices and developing and implementing treatment plans tailored to clients' needs and goals. Ms. Lightness holds a bachelor's degree in Psychology from University of Dar Es Salaam.`,
-    },
-    {
-      id: 7,
-      name: 'Angeline Bathsheba Kwame',
-      role: 'Project Manager',
-      image: '/team/angeline.webp',
-      bio: `A Zoologist and an environmentalist professional with one year of experience in projects management, biodiversity surveys, monitoring and environmental conservation. She is currently working with Empowered for Change (E4C) as a projects manager, leading all environmental, gender, and climate change projects ensuring effective project design, planning, implementation, monitoring, evaluation, reporting and maintain excellent relationships with relevant donors, government and stakeholders. In her role as projects manager, Ms. Angeline has pioneered digital innovations which has resulted in 10 folds increase of the organization reach of women, girls and people with disabilities, creating a pool of over 100 young women climate change makers. Time to time Ms. Angeline is also volunteering with Tanzania National Park (TANAPA) as an environmental ambassador creating awareness to the community of existing national parks. Ms. Angeline holds a bachelor's degree in Applied Zoology from University of Dar Es Salaam.`,
-    },
-  ];
-
-  const [activeMemberId, setActiveMemberId] = useState<number | null>(null);
-  const allMembers = [...boardMembers, ...teamMembers];
+  const [activeMemberId, setActiveMemberId] = useState<string | null>(null);
+  const allMembers = teamMembers;
   const activeMember = activeMemberId ? allMembers.find(m => m.id === activeMemberId) : null;
 
   return (
@@ -488,7 +419,7 @@ const TeamSection = () => {
               >
                 <div className="relative w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden cursor-pointer" onClick={() => setActiveMemberId(member.id)}>
                   <Image
-                    src={member.image}
+                    src={member.photo}
                     alt={member.name}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-300"
@@ -525,7 +456,7 @@ const TeamSection = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {teamMembers.map((member, index) => (
+            {teamStaff.map((member, index) => (
               <motion.div
                 key={member.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -536,7 +467,7 @@ const TeamSection = () => {
               >
                 <div className="relative w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden cursor-pointer" onClick={() => setActiveMemberId(member.id)}>
                   <Image
-                    src={member.image}
+                    src={member.photo}
                     alt={member.name}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-300"
@@ -568,7 +499,7 @@ const TeamSection = () => {
               </button>
               <div className="flex items-center gap-4 mb-6">
                 <div className="relative w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
-                  <Image src={activeMember.image} alt={activeMember.name} fill className="object-cover" />
+                  <Image src={activeMember.photo} alt={activeMember.name} fill className="object-cover" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900">{activeMember.name}</h3>
@@ -805,6 +736,8 @@ export default function Home() {
   const [featuredArticles, setFeaturedArticles] = useState([]);
   const [featuredGallery, setFeaturedGallery] = useState([]);
   const [featuredEvents, setFeaturedEvents] = useState([]);
+  const [heroSlides, setHeroSlides] = useState([]);
+  const [teamMembers, setTeamMembers] = useState([]);
 
   useEffect(() => {
     async function loadFeaturedArticles() {
@@ -901,19 +834,94 @@ export default function Home() {
       }
     }
 
+    async function loadHeroSlides() {
+      try {
+        const query = `*[_type == "heroSlide" && isActive == true] | order(order asc) {
+          _id,
+          title,
+          message,
+          image,
+          order
+        }`;
+        const slides = await client.fetch(query);
+        const formatted = slides.map((slide: any) => ({
+          id: slide._id,
+          title: slide.title,
+          message: slide.message,
+          image: slide.image ? urlForImage(slide.image).url() : '',
+        }));
+        setHeroSlides(formatted);
+      } catch (error) {
+        console.error('Error loading hero slides:', error);
+        // Fallback to default slides if Sanity fetch fails
+        setHeroSlides([
+          {
+            id: '1',
+            title: 'Women empowerment 1',
+            message: 'Empowered women make informed decisions about their bodies and health leading to healthier pregnancies and better reproductive health outcomes.',
+            image: '/slides/slide11.webp',
+          },
+          {
+            id: '2',
+            title: 'Women empowerment 2',
+            message: 'Empowered women have full control over their reproductive choices, they can plan their careers and families better, which positively impacts their ability to contribute to and benefit from economic growth.',
+            image: '/slides/slide22.webp',
+          },
+          {
+            id: '3',
+            title: 'Women empowerment 3',
+            message: 'Empowered women advocate for their rights and challenge discriminatory policies and practices.',
+            image: '/slides/slide33.webp',
+          },
+        ]);
+      }
+    }
+
+    async function loadTeamMembers() {
+      try {
+        const query = `*[_type == "teamMember" && isActive == true] | order(order asc) {
+          _id,
+          name,
+          role,
+          memberType,
+          photo,
+          bio,
+          order,
+          email,
+          linkedIn
+        }`;
+        const members = await client.fetch(query);
+        const formatted = members.map((member: any) => ({
+          id: member._id,
+          name: member.name,
+          role: member.role,
+          memberType: member.memberType,
+          photo: member.photo ? urlForImage(member.photo).url() : '',
+          bio: member.bio,
+          email: member.email,
+          linkedIn: member.linkedIn,
+        }));
+        setTeamMembers(formatted);
+      } catch (error) {
+        console.error('Error loading team members:', error);
+      }
+    }
+
     loadFeaturedArticles();
     loadFeaturedGallery();
     loadFeaturedEvents();
+    loadHeroSlides();
+    loadTeamMembers();
   }, []);
 
   return (
     <div className="min-h-screen space-y-20">
-      <HeroSection />
+      {heroSlides.length > 0 && <HeroSection slides={heroSlides} />}
       <ImpactStats />
       <AboutPreview />
       <NewsAndArticles articles={featuredArticles} />
       <FeaturedEvents events={featuredEvents} />
-      <TeamSection />
+      {teamMembers.length > 0 && <TeamSection teamMembers={teamMembers} />}
       <GalleryPreview galleryImages={featuredGallery} />
       <Partners />
       <CallToAction />
