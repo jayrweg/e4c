@@ -39,18 +39,12 @@ const nextConfig: NextConfig = {
   // Optimize production build
   productionBrowserSourceMaps: false,
 
-  // Enable SWC minification (faster)
-  swcMinify: true,
-
-  // Reduce bundle size
+  // Reduce bundle size with modular imports
   modularizeImports: {
     'framer-motion': {
       transform: 'framer-motion/dist/es/{{member}}',
     },
   },
-
-  // Optimize fonts
-  optimizeFonts: true,
 
   // Experimental performance features
   experimental: {

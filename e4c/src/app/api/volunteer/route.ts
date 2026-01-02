@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,21 +22,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create transporter
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
-
-    // Email content
-    const mailOptions = {
-      from: process.env.SMTP_USER,
+    // Send email using Resend
+    const { data, error } = await resend.emails.send({
+      from: 'E4C Volunteer Applications <onboarding@resend.dev>',
       to: 'rwegasirajackson11@gmail.com',
+      replyTo: email,
       subject: `New Volunteer Application: ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -73,13 +65,36 @@ export async function POST(request: NextRequest) {
           </div>
         </div>
       `,
-    };
+      text: `New Volunteer Application
 
-    // Send email
-    await transporter.sendMail(mailOptions);
+Personal Information:
+- Name: ${name}
+- Email: ${email}
+- Phone: ${phone}
+
+Volunteer Interest:
+- Area of Interest: ${areaOfInterest}
+
+Message:
+${message}
+
+Next Steps:
+Please contact the volunteer within 48 hours to schedule an interview and discuss next steps.
+
+---
+This volunteer application was submitted from the EMPOWERED FOR CHANGE (E4C) website.`,
+    });
+
+    if (error) {
+      console.error('Resend error:', error);
+      return NextResponse.json(
+        { error: 'Failed to process volunteer application' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
-      { message: 'Volunteer application received successfully' },
+      { message: 'Volunteer application received successfully', id: data?.id },
       { status: 200 }
     );
   } catch (error) {
