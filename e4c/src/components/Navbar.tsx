@@ -51,7 +51,7 @@ const Navbar = () => {
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="relative w-12 h-12 group-hover:scale-110 transition-transform duration-300">
               <Image
-                src="/logo/logo.png"
+                src="/logo/logo.webp"
                 alt="Empowered for Change Logo"
                 fill
                 className="object-contain"
