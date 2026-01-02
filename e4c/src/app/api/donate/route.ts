@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { fullName, email, phone, donationType, message } = body;
+    const { fullName, email, phone, donationType, selectedAmount, customAmount, message } = body;
 
     // Validate required fields
     if (!fullName || !email || !donationType) {
@@ -14,22 +16,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create transporter
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
+    // Determine the final donation amount
+    const donationAmount = customAmount || selectedAmount || 'Not specified';
 
-    // Email content
-    const mailOptions = {
-      from: process.env.SMTP_USER,
+    // Send email using Resend
+    const { data, error } = await resend.emails.send({
+      from: 'E4C Donations <onboarding@resend.dev>',
       to: 'rwegasirajackson11@gmail.com',
-      subject: `New Donation Inquiry: ${donationType}`,
+      replyTo: email,
+      subject: `New Donation Inquiry: ${donationType} - $${donationAmount}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #ea580c;">New Donation Inquiry</h2>
@@ -44,6 +39,7 @@ export async function POST(request: NextRequest) {
           <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="color: #374151; margin-top: 0;">Donation Details</h3>
             <p><strong>Donation Type:</strong> ${donationType}</p>
+            <p><strong>Amount:</strong> $${donationAmount}</p>
             ${message ? `<p><strong>Message:</strong></p><p style="white-space: pre-wrap; background-color: white; padding: 10px; border-radius: 4px; margin: 10px 0;">${message}</p>` : ''}
           </div>
 
@@ -61,13 +57,35 @@ export async function POST(request: NextRequest) {
           </div>
         </div>
       `,
-    };
+      text: `New Donation Inquiry
 
-    // Send email
-    await transporter.sendMail(mailOptions);
+Donor Information:
+- Name: ${fullName}
+- Email: ${email}
+${phone ? `- Phone: ${phone}` : ''}
+
+Donation Details:
+- Type: ${donationType}
+- Amount: $${donationAmount}
+${message ? `- Message: ${message}` : ''}
+
+Next Steps:
+Please contact the donor within 24 hours to discuss their donation and provide payment information.
+
+---
+This donation inquiry was submitted from the EMPOWERED FOR CHANGE (E4C) website.`,
+    });
+
+    if (error) {
+      console.error('Resend error:', error);
+      return NextResponse.json(
+        { error: 'Failed to process donation pledge' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
-      { message: 'Donation pledge received successfully' },
+      { message: 'Donation pledge received successfully', id: data?.id },
       { status: 200 }
     );
   } catch (error) {

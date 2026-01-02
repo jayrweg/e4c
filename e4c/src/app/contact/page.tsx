@@ -63,11 +63,8 @@ const ContactForm = () => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // Google Apps Script URL - REPLACE WITH YOUR ACTUAL URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxQ5iWkXHmxM6YSiIVsfgZtTVb9pIC89nrinOxDlNSIwh_ZWXGswKbh15RBL1jFonM9iA/exec';
-
     try {
-      const response = await fetch(scriptURL, {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +74,7 @@ const ContactForm = () => {
 
       const result = await response.json();
 
-      if (result.status === 'success') {
+      if (response.ok) {
         setSubmitStatus('success');
         setFormData({
           name: '',
@@ -86,7 +83,7 @@ const ContactForm = () => {
           message: '',
         });
       } else {
-        console.error('Error from server:', result.message);
+        console.error('Error from server:', result.error || result.message);
         setSubmitStatus('error');
       }
     } catch (error) {
@@ -209,7 +206,7 @@ const ContactForm = () => {
                         There was an error sending your message.
                       </p>
                       <p className="text-red-700 text-sm mt-1">
-                        Please check your internet connection and try again. If the problem persists, contact us directly at empoweredforchangetz@gmail.com
+                        Please check your internet connection and try again. If the problem persists, contact us directly at rwegasirajackson11@gmail.com
                       </p>
                     </div>
                   </div>

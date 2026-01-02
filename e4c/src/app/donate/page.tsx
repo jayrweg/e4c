@@ -62,6 +62,11 @@ const DonationForm = () => {
       ...prev,
       [name]: value,
     }));
+
+    // If user types in custom amount, clear the selected button amount
+    if (name === 'customAmount' && value) {
+      setSelectedAmount('');
+    }
   };
 
   const handleDonationTypeChange = (type: string) => {
@@ -79,11 +84,8 @@ const DonationForm = () => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // Google Apps Script URL - REPLACE WITH YOUR ACTUAL URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzzXyLyCOaU9G0uVMWc_CVZICJKGqQ4OKDI9d7J7CF-ASqoyldmPlI03tcuWFUQUsij/exec';
-
     try {
-      const response = await fetch(scriptURL, {
+      const response = await fetch('/api/donate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -101,7 +103,7 @@ const DonationForm = () => {
 
       const result = await response.json();
 
-      if (result.status === 'success') {
+      if (response.ok) {
         setSubmitStatus('success');
         setFormData({
           fullName: '',
@@ -113,7 +115,7 @@ const DonationForm = () => {
         });
         setSelectedAmount('');
       } else {
-        console.error('Error from server:', result.message);
+        console.error('Error from server:', result.error || result.message);
         setSubmitStatus('error');
       }
     } catch (error) {
@@ -347,7 +349,7 @@ const DonationForm = () => {
                         There was an error submitting your donation inquiry.
                       </p>
                       <p className="text-red-700 text-sm mt-1">
-                        Please check your internet connection and try again. If the problem persists, contact us directly at empoweredforchangetz@gmail.com or call +255(0) 767 439217
+                        Please check your internet connection and try again. If the problem persists, contact us directly at rwegasirajackson11@gmail.com or call +255(0) 767 439217
                       </p>
                     </div>
                   </div>
