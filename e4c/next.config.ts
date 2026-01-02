@@ -2,15 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
   typescript: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has type errors.
     ignoreBuildErrors: true,
   },
+
+  // Performance Optimizations
   images: {
     remotePatterns: [
       {
@@ -26,6 +24,37 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+    // Optimize images - use modern formats
+    formats: ['image/webp', 'image/avif'],
+    // Enable lazy loading by default
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Minimize layout shift
+    minimumCacheTTL: 60,
+  },
+
+  // Compress all responses
+  compress: true,
+
+  // Optimize production build
+  productionBrowserSourceMaps: false,
+
+  // Enable SWC minification (faster)
+  swcMinify: true,
+
+  // Reduce bundle size
+  modularizeImports: {
+    'framer-motion': {
+      transform: 'framer-motion/dist/es/{{member}}',
+    },
+  },
+
+  // Optimize fonts
+  optimizeFonts: true,
+
+  // Experimental performance features
+  experimental: {
+    optimizePackageImports: ['framer-motion', '@sanity/client'],
   },
 };
 
