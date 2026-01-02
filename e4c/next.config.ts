@@ -39,6 +39,10 @@ const nextConfig: NextConfig = {
   // Optimize production build
   productionBrowserSourceMaps: false,
 
+  // Fix Render monorepo detection warning
+  output: 'standalone',
+  outputFileTracingRoot: undefined,
+
   // Reduce bundle size with modular imports
   modularizeImports: {
     'framer-motion': {
