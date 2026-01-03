@@ -20,6 +20,8 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
           alt={project.title}
           fill
           className="object-cover group-hover:scale-110 transition-transform duration-500"
+          priority={index < 3}
+          loading={index < 3 ? 'eager' : 'lazy'}
         />
         <div className="absolute top-4 left-4">
           <span className="bg-orange-600 text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold shadow-lg">
