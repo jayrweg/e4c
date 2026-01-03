@@ -12,6 +12,9 @@ export const client = createClient({
   perspective: 'published',
   // Enable stega for faster image loading
   stega: false,
+  // Add timeout to prevent hanging requests
+  requestTagPrefix: 'e4c',
+  timeout: 30000, // 30 second timeout (increased for cold starts)
 })
 
 const builder = imageUrlBuilder(client)
@@ -37,4 +40,6 @@ export const staticClient = createClient({
   useCdn: true,
   apiVersion: '2024-01-01',
   perspective: 'published',
+  requestTagPrefix: 'e4c',
+  timeout: 30000, // 30 second timeout (increased for cold starts)
 })

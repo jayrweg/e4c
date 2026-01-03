@@ -15,61 +15,72 @@ import {
   getApproaches,
 } from './queries'
 
+// Helper function to handle fetch with timeout and error handling
+async function safeFetch<T>(query: string, params?: any, fallback: T = [] as T): Promise<T> {
+  try {
+    const result = await client.fetch(query, params)
+    return result || fallback
+  } catch (error) {
+    console.error('Sanity fetch error:', error)
+    return fallback
+  }
+}
+
 // Projects
 export async function fetchProjects() {
-  return await client.fetch(getProjects)
+  return await safeFetch(getProjects, undefined, [])
 }
 
 // Events
 export async function fetchEvents() {
-  return await client.fetch(getEvents)
+  return await safeFetch(getEvents, undefined, [])
 }
 
 export async function fetchFeaturedEvents() {
-  return await client.fetch(getFeaturedEvents)
+  return await safeFetch(getFeaturedEvents, undefined, [])
 }
 
 export async function fetchEventBySlug(slug: string) {
-  return await client.fetch(getEventBySlug, { slug })
+  return await safeFetch(getEventBySlug, { slug }, null)
 }
 
 // Resources
 export async function fetchResources() {
-  return await client.fetch(getResources)
+  return await safeFetch(getResources, undefined, [])
 }
 
 export async function fetchFeaturedResources() {
-  return await client.fetch(getFeaturedResources)
+  return await safeFetch(getFeaturedResources, undefined, [])
 }
 
 // Gallery
 export async function fetchGalleryImages() {
-  return await client.fetch(getGalleryImages)
+  return await safeFetch(getGalleryImages, undefined, [])
 }
 
 export async function fetchFeaturedGalleryImages() {
-  return await client.fetch(getFeaturedGalleryImages)
+  return await safeFetch(getFeaturedGalleryImages, undefined, [])
 }
 
 // Jobs
 export async function fetchJobs() {
-  return await client.fetch(getJobs)
+  return await safeFetch(getJobs, undefined, [])
 }
 
 export async function fetchJobBySlug(slug: string) {
-  return await client.fetch(getJobBySlug, { slug })
+  return await safeFetch(getJobBySlug, { slug }, null)
 }
 
 // Page Banners
 export async function fetchPageBanner(page: string) {
-  return await client.fetch(getPageBannerByPage, { page })
+  return await safeFetch(getPageBannerByPage, { page }, null)
 }
 
 export async function fetchAllPageBanners() {
-  return await client.fetch(getAllPageBanners)
+  return await safeFetch(getAllPageBanners, undefined, [])
 }
 
 // Approaches
 export async function fetchApproaches() {
-  return await client.fetch(getApproaches)
+  return await safeFetch(getApproaches, undefined, [])
 }
