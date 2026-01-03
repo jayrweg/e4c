@@ -1,15 +1,11 @@
 import Image from 'next/image';
-import { fetchEvents, fetchPageBanner } from '@/lib/api';
-import { urlForImage } from '@/lib/sanity';
 import EventsClient from './EventsClient';
 
 // Header Banner Component
-const HeaderBanner = ({ banner }: { banner: any }) => {
-  const bannerImage = banner?.backgroundImage
-    ? urlForImage(banner.backgroundImage).url()
-    : 'https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&auto=format&fit=crop&w=1976&q=80';
-  const heading = banner?.heading || 'Our Events';
-  const subheading = banner?.subheading || 'Join us in creating positive change through community events and workshops';
+const HeaderBanner = () => {
+  const bannerImage = '/gallery/gallery-1.jpg';
+  const heading = 'Our Events';
+  const subheading = 'Join us in creating positive change through community events and workshops';
 
   return (
     <section className="relative h-96 flex items-center justify-center overflow-hidden">
@@ -93,40 +89,13 @@ const EventStats = () => {
 };
 
 // Main Events Page Component (Server Component)
-export default async function Events() {
-  // Fetch events and page banner from Sanity CMS
-  let events = [];
-  let banner = null;
-
-  try {
-    [events, banner] = await Promise.all([
-      fetchEvents(),
-      fetchPageBanner('events')
-    ]);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-
-  // Format events data for the client component
-  const formattedEvents = events.map((event: any) => ({
-    id: event._id,
-    slug: event.slug?.current || '',
-    title: event.title,
-    description: event.excerpt || event.description || 'No description available',
-    image: event.mainImage ? urlForImage(event.mainImage).url() : 'https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&auto=format&fit=crop&w=1976&q=80',
-    date: event.eventDate ? new Date(event.eventDate).toISOString().split('T')[0] : (event.date || new Date().toISOString().split('T')[0]),
-    time: event.eventDate ? new Date(event.eventDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : (event.time || '09:00'),
-    location: event.venue || event.location || 'TBA',
-    category: event.eventType || event.category || 'community',
-    capacity: event.capacity || 'TBA',
-    status: event.status || 'upcoming',
-    organizers: event.organizers || [],
-    registrationRequired: event.registrationRequired || false,
-  }));
+export default function Events() {
+  // Use empty events array - can be populated with static data later
+  const formattedEvents: any[] = [];
 
   return (
     <div className="min-h-screen">
-      <HeaderBanner banner={banner} />
+      <HeaderBanner />
       <EventsClient events={formattedEvents} />
       <EventStats />
     </div>

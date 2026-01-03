@@ -45,7 +45,9 @@
       "Bash(cmd.exe /c \"dir /b /s C:\\\\Users\\\\USER\\\\Desktop\\\\Empower4Change\\\\e4c\\\\src\\\\*.ts | findstr /i sanity | findstr /v node_modules\")",
       "Bash(cmd.exe /c \"dir /b C:\\\\Users\\\\USER\\\\Desktop\\\\Empower4Change\\\\e4c\\\\sanity\\\\schemas\")",
       "Bash(xargs sed:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(cmd.exe /c \"dir /b /s C:\\\\Users\\\\USER\\\\Desktop\\\\Empower4Change\\\\e4c\\\\public\\\\*.jpg C:\\\\Users\\\\USER\\\\Desktop\\\\Empower4Change\\\\e4c\\\\public\\\\*.png C:\\\\Users\\\\USER\\\\Desktop\\\\Empower4Change\\\\e4c\\\\public\\\\*.webp C:\\\\Users\\\\USER\\\\Desktop\\\\Empower4Change\\\\e4c\\\\public\\\\*.svg 2>nul\":*)",
+      "Bash(cmd.exe /c \"tree /F C:\\\\Users\\\\USER\\\\Desktop\\\\Empower4Change\\\\e4c\\\\public\")"
     ],
     "deny": [],
     "ask": []

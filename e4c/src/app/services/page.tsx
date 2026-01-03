@@ -3,16 +3,12 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { client, urlForImage } from '@/lib/sanity';
 
 // Header Banner Component
-const HeaderBanner = ({ banner }: { banner: any }) => {
-  const bannerImage = banner?.backgroundImage
-    ? urlForImage(banner.backgroundImage).url()
-    : '/projects/project-inclusion.jpg';
-  const heading = banner?.heading || 'Our Services';
-  const subheading = banner?.subheading || 'Comprehensive programs and services designed to empower women and girls';
+const HeaderBanner = () => {
+  const bannerImage = '/projects/project-inclusion.jpg';
+  const heading = 'Our Services';
+  const subheading = 'Comprehensive programs and services designed to empower women and girls';
 
   return (
     <section className="relative h-96 flex items-center justify-center overflow-hidden">
@@ -419,30 +415,9 @@ const CallToAction = () => {
 
 // Main Services Page Component
 export default function Services() {
-  const [banner, setBanner] = useState<any>(null);
-
-  useEffect(() => {
-    async function fetchBanner() {
-      try {
-        const query = `*[_type == "pageBanner" && page == "services" && isActive == true][0] {
-          _id,
-          heading,
-          subheading,
-          backgroundImage
-        }`;
-        const bannerData = await client.fetch(query);
-        setBanner(bannerData);
-      } catch (error) {
-        console.error('Error fetching banner:', error);
-      }
-    }
-
-    fetchBanner();
-  }, []);
-
   return (
     <div className="min-h-screen">
-      <HeaderBanner banner={banner} />
+      <HeaderBanner />
       <ServicesGrid />
       <ServiceApproach />
       <ServiceImpact />

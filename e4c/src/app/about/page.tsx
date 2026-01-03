@@ -2,16 +2,13 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { client, urlForImage } from '@/lib/sanity';
+import { useState } from 'react';
 
 // Header Banner Component
-const HeaderBanner = ({ banner }: { banner: any }) => {
-  const bannerImage = banner?.backgroundImage
-    ? urlForImage(banner.backgroundImage).url()
-    : '/about/about-preview.jpg';
-  const heading = banner?.heading || 'About Us';
-  const subheading = banner?.subheading || 'Empowering women and girls of all abilities to realize their reproductive health goals by providing tools for informed decisions';
+const HeaderBanner = () => {
+  const bannerImage = '/about/about-preview.jpg';
+  const heading = 'About Us';
+  const subheading = 'Empowering women and girls of all abilities to realize their reproductive health goals by providing tools for informed decisions';
 
   return (
     <section className="relative h-96 flex items-center justify-center overflow-hidden">
@@ -224,8 +221,8 @@ const OurValues = () => {
 };
 
 // Our Approach Component
-const OurApproach = ({ approaches }: { approaches: any[] }) => {
-  const fallbackApproaches = [
+const OurApproach = () => {
+  const displayApproaches = [
     {
       title: 'Training and Mentorship',
       description: 'We have designed simplified training materials grounded on adult learning theories and we use age appropriate methodologies to make learning more joyful and enjoyable for young people. Our training packages incorporate on-going mentorship to ensure that gained knowledge is sustained and skills are put into practice and become part of day to day life of women and girls.',
@@ -247,8 +244,6 @@ const OurApproach = ({ approaches }: { approaches: any[] }) => {
       image: '/about/women.png',
     },
   ];
-
-  const displayApproaches = approaches.length > 0 ? approaches : fallbackApproaches;
 
   return (
     <section className="py-20 bg-gray-50">
@@ -506,52 +501,13 @@ const TeamSection = () => {
 
 // Main About Page Component
 export default function About() {
-  const [banner, setBanner] = useState<any>(null);
-  const [approaches, setApproaches] = useState<any[]>([]);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        // Fetch page banner
-        const bannerQuery = `*[_type == "pageBanner" && page == "about" && isActive == true][0] {
-          _id,
-          heading,
-          subheading,
-          backgroundImage
-        }`;
-        const bannerData = await client.fetch(bannerQuery);
-        setBanner(bannerData);
-
-        // Fetch approaches
-        const approachesQuery = `*[_type == "approach" && isActive == true] | order(order asc) {
-          _id,
-          title,
-          description,
-          image,
-          order
-        }`;
-        const approachesData = await client.fetch(approachesQuery);
-        const formatted = approachesData.map((app: any) => ({
-          title: app.title,
-          description: app.description,
-          image: app.image ? urlForImage(app.image).url() : '/about/training.jpg',
-        }));
-        setApproaches(formatted);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-
-    fetchData();
-  }, []);
-
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
-      <HeaderBanner banner={banner} />
+      <HeaderBanner />
       <OrganizationStory />
       <MissionVision />
       <OurValues />
-      <OurApproach approaches={approaches} />
+      <OurApproach />
       <TeamSection />
     </div>
   );

@@ -8,7 +8,7 @@ import ResourcesClient from './ResourcesClient';
 const HeaderBanner = ({ banner }: { banner: any }) => {
   const bannerImage = banner?.backgroundImage
     ? urlForImage(banner.backgroundImage).url()
-    : 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=1976&q=80';
+    : '/gallery/gallery-1.jpg';
   const heading = banner?.heading || 'Resources';
   const subheading = banner?.subheading || 'Knowledge, insights, and tools to empower women and girls';
 
@@ -56,7 +56,7 @@ export default async function Resources() {
     id: resource._id,
     title: resource.title,
     description: resource.description || 'No description available',
-    image: resource.thumbnail ? urlForImage(resource.thumbnail).url() : (resource.image ? urlForImage(resource.image).url() : 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=1976&q=80'),
+    image: resource.thumbnail ? urlForImage(resource.thumbnail).url() : (resource.image ? urlForImage(resource.image).url() : '/gallery/gallery-1.jpg'),
     category: resource.category || 'blog',
     type: resource.resourceType || resource.category || 'Article',
     slug: resource.slug?.current || resource._id,

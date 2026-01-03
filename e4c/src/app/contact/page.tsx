@@ -2,16 +2,13 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { client, urlForImage } from '@/lib/sanity';
+import { useState } from 'react';
 
 // Header Banner Component
-const HeaderBanner = ({ banner }: { banner: any }) => {
-  const bannerImage = banner?.backgroundImage
-    ? urlForImage(banner.backgroundImage).url()
-    : '/projects/project-education.jpg';
-  const heading = banner?.heading || 'Get in Touch';
-  const subheading = banner?.subheading || 'We\'d love to hear from you. Reach out to us for questions, partnerships, or support.';
+const HeaderBanner = () => {
+  const bannerImage = '/projects/project-education.jpg';
+  const heading = 'Get in Touch';
+  const subheading = 'We\'d love to hear from you. Reach out to us for questions, partnerships, or support.';
 
   return (
     <section className="relative h-96 flex items-center justify-center overflow-hidden">
@@ -373,30 +370,9 @@ const MapPlaceholder = () => {
 
 // Main Contact Page Component
 export default function Contact() {
-  const [banner, setBanner] = useState<any>(null);
-
-  useEffect(() => {
-    async function fetchBanner() {
-      try {
-        const query = `*[_type == "pageBanner" && page == "contact" && isActive == true][0] {
-          _id,
-          heading,
-          subheading,
-          backgroundImage
-        }`;
-        const bannerData = await client.fetch(query);
-        setBanner(bannerData);
-      } catch (error) {
-        console.error('Error fetching banner:', error);
-      }
-    }
-
-    fetchBanner();
-  }, []);
-
   return (
     <div className="min-h-screen">
-      <HeaderBanner banner={banner} />
+      <HeaderBanner />
       <ContactForm />
     </div>
   );

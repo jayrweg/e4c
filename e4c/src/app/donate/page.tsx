@@ -2,16 +2,13 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { client, urlForImage } from '@/lib/sanity';
+import { useState } from 'react';
 
 // Header Banner Component
-const HeaderBanner = ({ banner }: { banner: any }) => {
-  const bannerImage = banner?.backgroundImage
-    ? urlForImage(banner.backgroundImage).url()
-    : '/gallery/gallery-2.jpg';
-  const heading = banner?.heading || 'Stand with E4C Today';
-  const subheading = banner?.subheading || 'Your donation helps us empower women and girls across Tanzania';
+const HeaderBanner = () => {
+  const bannerImage = '/gallery/gallery-2.jpg';
+  const heading = 'Stand with E4C Today';
+  const subheading = 'Your donation helps us empower women and girls across Tanzania';
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -373,30 +370,9 @@ const DonationForm = () => {
 
 // Main Donate Page
 export default function Donate() {
-  const [banner, setBanner] = useState<any>(null);
-
-  useEffect(() => {
-    async function fetchBanner() {
-      try {
-        const query = `*[_type == "pageBanner" && page == "donate" && isActive == true][0] {
-          _id,
-          heading,
-          subheading,
-          backgroundImage
-        }`;
-        const bannerData = await client.fetch(query);
-        setBanner(bannerData);
-      } catch (error) {
-        console.error('Error fetching banner:', error);
-      }
-    }
-
-    fetchBanner();
-  }, []);
-
   return (
     <div className="min-h-screen">
-      <HeaderBanner banner={banner} />
+      <HeaderBanner />
       <DonationForm />
     </div>
   );
