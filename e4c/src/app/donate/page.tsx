@@ -2,18 +2,26 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { client, urlForImage } from '@/lib/sanity';
 
 // Header Banner Component
-const HeaderBanner = () => {
+const HeaderBanner = ({ banner }: { banner: any }) => {
+  const bannerImage = banner?.backgroundImage
+    ? urlForImage(banner.backgroundImage).url()
+    : '/gallery/gallery-2.webp';
+  const heading = banner?.heading || 'Stand with E4C Today';
+  const subheading = banner?.subheading || 'Your donation helps us empower women and girls across Tanzania';
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/gallery/gallery-2.webp"
-          alt="Support our work"
+          src={bannerImage}
+          alt={heading}
           fill
           className="object-cover"
+          priority
         />
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
@@ -24,7 +32,7 @@ const HeaderBanner = () => {
           transition={{ duration: 0.8 }}
           className="text-4xl md:text-6xl font-bold mb-4"
         >
-          Stand with E4C Today
+          {heading}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 30 }}
@@ -32,7 +40,7 @@ const HeaderBanner = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-xl md:text-2xl max-w-4xl mx-auto"
         >
-          Your donation helps us empower women and girls across Tanzania
+          {subheading}
         </motion.p>
       </div>
     </section>
@@ -365,9 +373,30 @@ const DonationForm = () => {
 
 // Main Donate Page
 export default function Donate() {
+  const [banner, setBanner] = useState<any>(null);
+
+  useEffect(() => {
+    async function fetchBanner() {
+      try {
+        const query = `*[_type == "pageBanner" && page == "donate" && isActive == true][0] {
+          _id,
+          heading,
+          subheading,
+          backgroundImage
+        }`;
+        const bannerData = await client.fetch(query);
+        setBanner(bannerData);
+      } catch (error) {
+        console.error('Error fetching banner:', error);
+      }
+    }
+
+    fetchBanner();
+  }, []);
+
   return (
     <div className="min-h-screen">
-      <HeaderBanner />
+      <HeaderBanner banner={banner} />
       <DonationForm />
     </div>
   );

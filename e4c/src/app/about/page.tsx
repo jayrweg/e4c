@@ -238,7 +238,7 @@ const OurApproach = ({ approaches }: { approaches: any[] }) => {
     },
     {
       title: 'Domestic Resource Mobilization',
-      description: 'Our organization strongly believe that domestic government spending on family planning should become the mainstay of a country's family planning program, providing a budgeted flow of funds for services and staff. Our advocacy efforts have therefore focused on working with regional, districts and health facilities to increase allocations, disbursement and utilization of resources for family planning, adolescents' friendly SRH services and SRH services for people with disabilities.',
+      description: 'Our organization strongly believe that domestic government spending on family planning should become the mainstay of a country\'s family planning program, providing a budgeted flow of funds for services and staff. Our advocacy efforts have therefore focused on working with regional, districts and health facilities to increase allocations, disbursement and utilization of resources for family planning, adolescents\' friendly SRH services and SRH services for people with disabilities.',
       image: '/about/domestic.webp',
     },
     {

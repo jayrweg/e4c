@@ -2,29 +2,37 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { client, urlForImage } from '@/lib/sanity';
 
 // Header Banner Component
-const HeaderBanner = () => {
+const HeaderBanner = ({ banner }: { banner: any }) => {
+  const bannerImage = banner?.backgroundImage
+    ? urlForImage(banner.backgroundImage).url()
+    : '/projects/project-education.jpg';
+  const heading = banner?.heading || 'Get in Touch';
+  const subheading = banner?.subheading || 'We\'d love to hear from you. Reach out to us for questions, partnerships, or support.';
+
   return (
     <section className="relative h-96 flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/projects/project-education.jpg"
-          alt="Get in touch"
+          src={bannerImage}
+          alt={heading}
           fill
           className="object-cover"
+          priority
         />
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
-      <div className="relative z-10 text-center text-white">
+      <div className="relative z-10 text-center text-white px-4">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-4xl md:text-6xl font-bold mb-4"
         >
-          Get in Touch
+          {heading}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 30 }}
@@ -32,7 +40,7 @@ const HeaderBanner = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-xl md:text-2xl max-w-5xl mx-auto"
         >
-          We'd love to hear from you. Reach out to us for questions, partnerships, or support.
+          {subheading}
         </motion.p>
       </div>
     </section>
@@ -365,9 +373,30 @@ const MapPlaceholder = () => {
 
 // Main Contact Page Component
 export default function Contact() {
+  const [banner, setBanner] = useState<any>(null);
+
+  useEffect(() => {
+    async function fetchBanner() {
+      try {
+        const query = `*[_type == "pageBanner" && page == "contact" && isActive == true][0] {
+          _id,
+          heading,
+          subheading,
+          backgroundImage
+        }`;
+        const bannerData = await client.fetch(query);
+        setBanner(bannerData);
+      } catch (error) {
+        console.error('Error fetching banner:', error);
+      }
+    }
+
+    fetchBanner();
+  }, []);
+
   return (
     <div className="min-h-screen">
-      <HeaderBanner />
+      <HeaderBanner banner={banner} />
       <ContactForm />
     </div>
   );
