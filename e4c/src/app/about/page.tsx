@@ -2,29 +2,37 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { client, urlForImage } from '@/lib/sanity';
 
 // Header Banner Component
-const HeaderBanner = () => {
+const HeaderBanner = ({ banner }: { banner: any }) => {
+  const bannerImage = banner?.backgroundImage
+    ? urlForImage(banner.backgroundImage).url()
+    : '/about/about-preview.webp';
+  const heading = banner?.heading || 'About Us';
+  const subheading = banner?.subheading || 'Empowering women and girls of all abilities to realize their reproductive health goals by providing tools for informed decisions';
+
   return (
     <section className="relative h-96 flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/about/about-preview.webp"
-          alt="About Empower for Change"
+          src={bannerImage}
+          alt={heading}
           fill
           className="object-cover"
+          priority
         />
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
-      <div className="relative z-10 text-center text-white">
+      <div className="relative z-10 text-center text-white px-4">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-4xl md:text-6xl font-bold mb-4"
         >
-          About Us
+          {heading}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 30 }}
@@ -32,7 +40,7 @@ const HeaderBanner = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-xl md:text-2xl max-w-3xl mx-auto"
         >
-          Empowering women and girls of all abilities to realize their reproductive health goals by providing tools for informed decisions
+          {subheading}
         </motion.p>
       </div>
     </section>
@@ -216,8 +224,8 @@ const OurValues = () => {
 };
 
 // Our Approach Component
-const OurApproach = () => {
-  const approaches = [
+const OurApproach = ({ approaches }: { approaches: any[] }) => {
+  const fallbackApproaches = [
     {
       title: 'Training and Mentorship',
       description: 'We have designed simplified training materials grounded on adult learning theories and we use age appropriate methodologies to make learning more joyful and enjoyable for young people. Our training packages incorporate on-going mentorship to ensure that gained knowledge is sustained and skills are put into practice and become part of day to day life of women and girls.',
@@ -230,7 +238,7 @@ const OurApproach = () => {
     },
     {
       title: 'Domestic Resource Mobilization',
-      description: 'Our organization strongly believe that domestic government spending on family planning should become the mainstay of a country’s family planning program, providing a budgeted flow of funds for services and staff. Our advocacy efforts have therefore focused on working with regional, districts and health facilities to increase allocations, disbursement and utilization of resources for family planning, adolescents’ friendly SRH services and SRH services for people with disabilities.',
+      description: 'Our organization strongly believe that domestic government spending on family planning should become the mainstay of a country's family planning program, providing a budgeted flow of funds for services and staff. Our advocacy efforts have therefore focused on working with regional, districts and health facilities to increase allocations, disbursement and utilization of resources for family planning, adolescents' friendly SRH services and SRH services for people with disabilities.',
       image: '/about/domestic.webp',
     },
     {
@@ -239,6 +247,8 @@ const OurApproach = () => {
       image: '/about/women.webp',
     },
   ];
+
+  const displayApproaches = approaches.length > 0 ? approaches : fallbackApproaches;
 
   return (
     <section className="py-20 bg-gray-50">
@@ -259,7 +269,7 @@ const OurApproach = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {approaches.map((approach, index) => (
+          {displayApproaches.map((approach, index) => (
             <motion.div
               key={approach.title}
               initial={{ opacity: 0, y: 30 }}
@@ -496,13 +506,52 @@ const TeamSection = () => {
 
 // Main About Page Component
 export default function About() {
+  const [banner, setBanner] = useState<any>(null);
+  const [approaches, setApproaches] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // Fetch page banner
+        const bannerQuery = `*[_type == "pageBanner" && page == "about" && isActive == true][0] {
+          _id,
+          heading,
+          subheading,
+          backgroundImage
+        }`;
+        const bannerData = await client.fetch(bannerQuery);
+        setBanner(bannerData);
+
+        // Fetch approaches
+        const approachesQuery = `*[_type == "approach" && isActive == true] | order(order asc) {
+          _id,
+          title,
+          description,
+          image,
+          order
+        }`;
+        const approachesData = await client.fetch(approachesQuery);
+        const formatted = approachesData.map((app: any) => ({
+          title: app.title,
+          description: app.description,
+          image: app.image ? urlForImage(app.image).url() : '/about/training.webp',
+        }));
+        setApproaches(formatted);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
-      <HeaderBanner />
+      <HeaderBanner banner={banner} />
       <OrganizationStory />
       <MissionVision />
       <OurValues />
-      <OurApproach />
+      <OurApproach approaches={approaches} />
       <TeamSection />
     </div>
   );

@@ -1,27 +1,34 @@
 import Image from 'next/image';
-import { fetchEvents } from '@/lib/api';
+import { fetchEvents, fetchPageBanner } from '@/lib/api';
 import { urlForImage } from '@/lib/sanity';
 import EventsClient from './EventsClient';
 
 // Header Banner Component
-const HeaderBanner = () => {
+const HeaderBanner = ({ banner }: { banner: any }) => {
+  const bannerImage = banner?.backgroundImage
+    ? urlForImage(banner.backgroundImage).url()
+    : 'https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&auto=format&fit=crop&w=1976&q=80';
+  const heading = banner?.heading || 'Our Events';
+  const subheading = banner?.subheading || 'Join us in creating positive change through community events and workshops';
+
   return (
     <section className="relative h-96 flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&auto=format&fit=crop&w=1976&q=80"
-          alt="Our Events"
+          src={bannerImage}
+          alt={heading}
           fill
           className="object-cover"
+          priority
         />
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
-      <div className="relative z-10 text-center text-white">
+      <div className="relative z-10 text-center text-white px-4">
         <h1 className="text-4xl md:text-6xl font-bold mb-4">
-          Our Events
+          {heading}
         </h1>
-        <p className="text-xl md:text-2xl max-w-5xl mx-auto">
-          Join us in creating positive change through community events and workshops
+        <p className="text-xl md:text-2xl max-w-3xl mx-auto">
+          {subheading}
         </p>
       </div>
     </section>
@@ -87,12 +94,17 @@ const EventStats = () => {
 
 // Main Events Page Component (Server Component)
 export default async function Events() {
-  // Fetch events from Sanity CMS
+  // Fetch events and page banner from Sanity CMS
   let events = [];
+  let banner = null;
+
   try {
-    events = await fetchEvents();
+    [events, banner] = await Promise.all([
+      fetchEvents(),
+      fetchPageBanner('events')
+    ]);
   } catch (error) {
-    console.error('Error fetching events:', error);
+    console.error('Error fetching data:', error);
   }
 
   // Format events data for the client component
@@ -114,7 +126,7 @@ export default async function Events() {
 
   return (
     <div className="min-h-screen">
-      <HeaderBanner />
+      <HeaderBanner banner={banner} />
       <EventsClient events={formattedEvents} />
       <EventStats />
     </div>

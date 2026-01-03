@@ -1,29 +1,36 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { fetchProjects } from '@/lib/api';
+import { fetchProjects, fetchPageBanner } from '@/lib/api';
 import { urlForImage } from '@/lib/sanity';
 import ProjectsClient from './ProjectsClient';
 
 // Header Banner Component
-const HeaderBanner = () => {
+const HeaderBanner = ({ banner }: { banner: any }) => {
+  const bannerImage = banner?.backgroundImage
+    ? urlForImage(banner.backgroundImage).url()
+    : '/projects/project-education.jpg';
+  const heading = banner?.heading || 'Our Projects';
+  const subheading = banner?.subheading || 'Empowering women and girls through innovative programs and initiatives in Dar es Salaam and Dodoma regions';
+
   return (
     <section className="relative h-96 flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/projects/project-education.jpg"
-          alt="Our Projects"
+          src={bannerImage}
+          alt={heading}
           fill
           className="object-cover"
+          priority
         />
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
       <div className="relative z-10 text-center text-white px-4">
         <h1 className="text-4xl md:text-6xl font-bold mb-4">
-          Our Projects
+          {heading}
         </h1>
         <p className="text-xl md:text-2xl max-w-3xl mx-auto">
-          Empowering women and girls through innovative programs and initiatives in Dar es Salaam and Dodoma regions
+          {subheading}
         </p>
       </div>
     </section>
@@ -32,12 +39,17 @@ const HeaderBanner = () => {
 
 // Main Projects Page Component (Server Component)
 export default async function Projects() {
-  // Fetch projects from Sanity CMS
+  // Fetch projects and page banner from Sanity CMS
   let projects = [];
+  let banner = null;
+
   try {
-    projects = await fetchProjects();
+    [projects, banner] = await Promise.all([
+      fetchProjects(),
+      fetchPageBanner('projects')
+    ]);
   } catch (error) {
-    console.error('Error fetching projects:', error);
+    console.error('Error fetching data:', error);
   }
 
   // Format projects data for the client component
@@ -135,7 +147,7 @@ export default async function Projects() {
 
   return (
     <div className="min-h-screen">
-      <HeaderBanner />
+      <HeaderBanner banner={banner} />
       <ProjectsClient projects={displayProjects} />
     </div>
   );

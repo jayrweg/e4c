@@ -10,6 +10,9 @@ import {
   getFeaturedGalleryImages,
   getJobs,
   getJobBySlug,
+  getPageBannerByPage,
+  getAllPageBanners,
+  getApproaches,
 } from './queries'
 
 // Projects
@@ -55,4 +58,18 @@ export async function fetchJobs() {
 
 export async function fetchJobBySlug(slug: string) {
   return await client.fetch(getJobBySlug, { slug })
+}
+
+// Page Banners
+export async function fetchPageBanner(page: string) {
+  return await client.fetch(getPageBannerByPage, { page })
+}
+
+export async function fetchAllPageBanners() {
+  return await client.fetch(getAllPageBanners)
+}
+
+// Approaches
+export async function fetchApproaches() {
+  return await client.fetch(getApproaches)
 }

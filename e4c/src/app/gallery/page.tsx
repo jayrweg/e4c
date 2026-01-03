@@ -1,27 +1,34 @@
 import Image from 'next/image';
-import { fetchGalleryImages } from '@/lib/api';
+import { fetchGalleryImages, fetchPageBanner } from '@/lib/api';
 import { urlForImage } from '@/lib/sanity';
 import GalleryClient from './GalleryClient';
 
 // Header Banner Component
-const HeaderBanner = () => {
+const HeaderBanner = ({ banner }: { banner: any }) => {
+  const bannerImage = banner?.backgroundImage
+    ? urlForImage(banner.backgroundImage).url()
+    : '/gallery/gallery-1.webp';
+  const heading = banner?.heading || 'Our Gallery';
+  const subheading = banner?.subheading || 'Moments of impact, empowerment, and positive change in our communities';
+
   return (
     <section className="relative h-96 flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/gallery/gallery-1.webp"
-          alt="Our Gallery"
+          src={bannerImage}
+          alt={heading}
           fill
           className="object-cover"
+          priority
         />
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
       <div className="relative z-10 text-center text-white px-4">
         <h1 className="text-4xl md:text-6xl font-bold mb-4">
-          Our Gallery
+          {heading}
         </h1>
-        <p className="text-xl md:text-2xl max-w-6xl mx-auto">
-          Moments of impact, empowerment, and positive change in our communities
+        <p className="text-xl md:text-2xl max-w-3xl mx-auto">
+          {subheading}
         </p>
       </div>
     </section>
@@ -30,12 +37,17 @@ const HeaderBanner = () => {
 
 // Main Gallery Page Component (Server Component)
 export default async function Gallery() {
-  // Fetch gallery images from Sanity CMS
+  // Fetch gallery images and page banner from Sanity CMS
   let galleryImages = [];
+  let banner = null;
+
   try {
-    galleryImages = await fetchGalleryImages();
+    [galleryImages, banner] = await Promise.all([
+      fetchGalleryImages(),
+      fetchPageBanner('gallery')
+    ]);
   } catch (error) {
-    console.error('Error fetching gallery images:', error);
+    console.error('Error fetching data:', error);
   }
 
   // Format gallery data for client component
@@ -166,7 +178,7 @@ export default async function Gallery() {
 
   return (
     <div className="min-h-screen">
-      <HeaderBanner />
+      <HeaderBanner banner={banner} />
       <GalleryClient images={displayImages} />
     </div>
   );
