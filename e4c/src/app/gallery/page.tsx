@@ -7,7 +7,7 @@ import GalleryClient from './GalleryClient';
 const HeaderBanner = ({ banner }: { banner: any }) => {
   const bannerImage = banner?.backgroundImage
     ? urlForImage(banner.backgroundImage).url()
-    : '/gallery/gallery-1.webp';
+    : '/gallery/gallery-1.jpg';
   const heading = banner?.heading || 'Our Gallery';
   const subheading = banner?.subheading || 'Moments of impact, empowerment, and positive change in our communities';
 
@@ -53,7 +53,7 @@ export default async function Gallery() {
   // Format gallery data for client component
   const formattedImages = galleryImages.map((image: any) => ({
     id: image._id,
-    src: image.image ? urlForImage(image.image).url() : '/gallery/gallery-1.webp',
+    src: image.image ? urlForImage(image.image).url() : '/gallery/gallery-1.jpg',
     alt: image.title,
     title: image.title,
     description: image.description,
@@ -65,7 +65,7 @@ export default async function Gallery() {
   const fallbackImages = [
     {
       id: 1,
-      src: '/gallery/gallery-1.webp',
+      src: '/gallery/gallery-1.jpg',
       alt: 'Women empowerment workshop',
       title: 'Women Empowerment Workshop',
       description: 'Participants learning about reproductive health and decision-making',
@@ -74,7 +74,7 @@ export default async function Gallery() {
     },
     {
       id: 2,
-      src: '/gallery/gallery-2.webp',
+      src: '/gallery/gallery-2.jpg',
       alt: 'Community health fair',
       title: 'Community Health Fair',
       description: 'Free health screenings and education for community members',
@@ -83,7 +83,7 @@ export default async function Gallery() {
     },
     {
       id: 3,
-      src: '/gallery/gallery-3.webp',
+      src: '/gallery/gallery-3.jpg',
       alt: 'Healthcare provider training',
       title: 'Healthcare Provider Training',
       description: 'Training session on inclusive healthcare practices',
@@ -92,7 +92,7 @@ export default async function Gallery() {
     },
     {
       id: 4,
-      src: '/gallery/gallery-4.webp',
+      src: '/gallery/gallery-4.jpg',
       alt: 'Disability inclusion conference',
       title: 'Disability Inclusion Conference',
       description: 'Conference on inclusive healthcare and accessibility',
@@ -101,7 +101,7 @@ export default async function Gallery() {
     },
     {
       id: 5,
-      src: '/gallery/gallery-5.webp',
+      src: '/gallery/gallery-5.jpg',
       alt: 'Youth leadership program',
       title: 'Youth Leadership Program',
       description: 'Young women developing leadership and advocacy skills',
@@ -110,7 +110,7 @@ export default async function Gallery() {
     },
     {
       id: 6,
-      src: '/gallery/gallery-6.webp',
+      src: '/gallery/gallery-6.jpg',
       alt: 'Team meeting',
       title: 'Team Strategy Meeting',
       description: 'Our team planning future initiatives and programs',
@@ -119,7 +119,7 @@ export default async function Gallery() {
     },
     {
       id: 7,
-      src: '/gallery/gallery-1.webp',
+      src: '/gallery/gallery-1.jpg',
       alt: 'Policy advocacy event',
       title: 'Policy Advocacy Event',
       description: 'Meeting with policymakers to discuss women\'s health policies',
@@ -128,7 +128,7 @@ export default async function Gallery() {
     },
     {
       id: 8,
-      src: '/gallery/gallery-2.webp',
+      src: '/gallery/gallery-2.jpg',
       alt: 'Community outreach',
       title: 'Community Outreach',
       description: 'Engaging with community members about reproductive health',
@@ -137,7 +137,7 @@ export default async function Gallery() {
     },
     {
       id: 9,
-      src: '/gallery/gallery-3.webp',
+      src: '/gallery/gallery-3.jpg',
       alt: 'Medical training session',
       title: 'Medical Training Session',
       description: 'Healthcare professionals learning about disability inclusion',
@@ -146,7 +146,7 @@ export default async function Gallery() {
     },
     {
       id: 10,
-      src: '/gallery/gallery-4.webp',
+      src: '/gallery/gallery-4.jpg',
       alt: 'Support group meeting',
       title: 'Support Group Meeting',
       description: 'Women sharing experiences and supporting each other',
@@ -155,7 +155,7 @@ export default async function Gallery() {
     },
     {
       id: 11,
-      src: '/gallery/gallery-5.webp',
+      src: '/gallery/gallery-5.jpg',
       alt: 'Team building activity',
       title: 'Team Building Activity',
       description: 'Our team participating in a community service project',
@@ -164,7 +164,7 @@ export default async function Gallery() {
     },
     {
       id: 12,
-      src: '/gallery/gallery-6.webp',
+      src: '/gallery/gallery-6.jpg',
       alt: 'Award ceremony',
       title: 'Recognition Ceremony',
       description: 'Celebrating the achievements of our program participants',

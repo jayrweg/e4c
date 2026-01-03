@@ -11,14 +11,14 @@ const Partners = () => {
     {
       id: 1,
       name: 'First Charity',
-      logo: '/partners/partner-1.webp',
+      logo: '/partners/partner-1.png',
       website: 'https://thefirstcharity.org',
       isFirstCharity: true,
     },
     {
       id: 2,
       name: 'Partner 2',
-      logo: '/partners/partner-2.webp',
+      logo: '/partners/partner-2.png',
       website: '#',
       isFirstCharity: false,
     },

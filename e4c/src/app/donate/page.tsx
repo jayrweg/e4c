@@ -9,7 +9,7 @@ import { client, urlForImage } from '@/lib/sanity';
 const HeaderBanner = ({ banner }: { banner: any }) => {
   const bannerImage = banner?.backgroundImage
     ? urlForImage(banner.backgroundImage).url()
-    : '/gallery/gallery-2.webp';
+    : '/gallery/gallery-2.jpg';
   const heading = banner?.heading || 'Stand with E4C Today';
   const subheading = banner?.subheading || 'Your donation helps us empower women and girls across Tanzania';
 
