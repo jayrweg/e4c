@@ -1,0 +1,137 @@
+name: Deploy to Hosting via SSH
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: e4c/package-lock.json
+
+      - name: Create .env.production file
+        run: |
+          cd e4c
+          cat > .env.production << EOF
+          NEXT_PUBLIC_SANITY_PROJECT_ID=${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET=production
+          SANITY_API_TOKEN=${{ secrets.SANITY_API_TOKEN }}
+          RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
+          CONTACT_EMAIL=info@empowerforchange.org
+          DONATION_EMAIL=info@empowerforchange.org
+          VOLUNTEER_EMAIL=info@empowerforchange.org
+          HOSTNAME=0.0.0.0
+          NODE_ENV=production
+          EOF
+
+      - name: Install dependencies
+        run: |
+          cd e4c
+          npm ci --production=false
+
+      - name: Build Next.js application
+        run: |
+          cd e4c
+          npm run build
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: production
+
+      - name: Create deployment package
+        run: |
+          cd e4c
+          mkdir -p deploy-package
+
+          # Copy necessary files for production
+          cp -r .next deploy-package/
+          cp -r public deploy-package/
+          cp -r node_modules deploy-package/
+          cp package.json deploy-package/
+          cp package-lock.json deploy-package/
+          cp next.config.* deploy-package/ 2>/dev/null || true
+          cp .env.production deploy-package/
+
+          # Create start script
+          cat > deploy-package/start.sh << 'SCRIPT'
+          #!/bin/bash
+          export NODE_ENV=production
+          export PORT=${PORT:-3000}
+          node_modules/.bin/next start -p $PORT
+          SCRIPT
+          chmod +x deploy-package/start.sh
+
+          # Create PM2 ecosystem file
+          cat > deploy-package/ecosystem.config.js << 'SCRIPT'
+          module.exports = {
+            apps: [{
+              name: 'e4c-website',
+              script: './node_modules/.bin/next',
+              args: 'start',
+              instances: 1,
+              autorestart: true,
+              watch: false,
+              max_memory_restart: '1G',
+              env: {
+                NODE_ENV: 'production',
+                PORT: 3000
+              }
+            }]
+          }
+          SCRIPT
+
+      - name: Deploy to Server via SSH
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc --delete"
+          SOURCE: "e4c/deploy-package/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT || 22 }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+          EXCLUDE: "/node_modules/, /.git/, /.next/cache/"
+
+      - name: Restart Application on Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.REMOTE_PORT || 22 }}
+          script: |
+            cd ${{ secrets.REMOTE_TARGET }}
+
+            # Install PM2 if not present
+            if ! command -v pm2 &> /dev/null; then
+              npm install -g pm2
+            fi
+
+            # Restart with PM2
+            pm2 delete e4c-website 2>/dev/null || true
+            pm2 start ecosystem.config.js
+            pm2 save
+
+            echo "✅ Deployment successful!"
+            pm2 status
+
+      - name: Notify Deployment Status
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "✅ Deployment to ${{ secrets.REMOTE_HOST }} successful!"
+          else
+            echo "❌ Deployment failed! Check the logs above."
+            exit 1
+          fi
