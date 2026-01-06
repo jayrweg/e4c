@@ -241,7 +241,7 @@ const OurApproach = () => {
     {
       title: 'Strengthening Women-Led CSOs',
       description: 'Our organization believes that women and girls are experts of their own needs and therefore meaningful engagement and involvement of women in policy development, planning, budgeting and all SRH interventions is paramount. Our interventions are focused on building the capacity of women and girls led civil society organizations (CSOs) to lead and fully participate in SRH policy making and programming. We strengthen the ability of CSOs to advocate for quality and equitable SRH information and services and hold the government accountable on its SRH commitments.',
-      image: '/about/women.png',
+      image: '/about/women.jpg',
     },
   ];
 

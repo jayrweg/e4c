@@ -1,15 +1,13 @@
 import Image from 'next/image';
-import { fetchGalleryImages, fetchPageBanner } from '@/lib/api';
+import { fetchGalleryImages } from '@/lib/api';
 import { urlForImage } from '@/lib/sanity';
 import GalleryClient from './GalleryClient';
 
-// Header Banner Component
-const HeaderBanner = ({ banner }: { banner: any }) => {
-  const bannerImage = banner?.backgroundImage
-    ? urlForImage(banner.backgroundImage).url()
-    : '/gallery/gallery-1.jpg';
-  const heading = banner?.heading || 'Our Gallery';
-  const subheading = banner?.subheading || 'Moments of impact, empowerment, and positive change in our communities';
+// Header Banner Component (Static)
+const HeaderBanner = () => {
+  const bannerImage = '/gallery/gallery-1.jpg';
+  const heading = 'Our Gallery';
+  const subheading = 'Moments of impact, empowerment, and positive change in our communities';
 
   return (
     <section className="relative h-96 flex items-center justify-center overflow-hidden">
@@ -37,15 +35,11 @@ const HeaderBanner = ({ banner }: { banner: any }) => {
 
 // Main Gallery Page Component (Server Component)
 export default async function Gallery() {
-  // Fetch gallery images and page banner from Sanity CMS
+  // Fetch gallery images from Sanity CMS
   let galleryImages = [];
-  let banner = null;
 
   try {
-    [galleryImages, banner] = await Promise.all([
-      fetchGalleryImages(),
-      fetchPageBanner('gallery')
-    ]);
+    galleryImages = await fetchGalleryImages();
   } catch (error) {
     console.error('Error fetching data:', error);
   }
@@ -178,7 +172,7 @@ export default async function Gallery() {
 
   return (
     <div className="min-h-screen">
-      <HeaderBanner banner={banner} />
+      <HeaderBanner />
       <GalleryClient images={displayImages} />
     </div>
   );

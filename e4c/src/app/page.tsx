@@ -5,8 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Partners from '@/components/Partners';
-import { client } from '@/lib/sanity';
-import { urlForImage } from '@/lib/sanity';
+import { client, urlForImage } from '@/lib/sanity';
+import { fetchFeaturedResources } from '@/lib/api';
 
 // Hero Section Component (slideshow)
 const HeroSection = ({ slides }: { slides: any[] }) => {
@@ -741,8 +741,24 @@ export default function Home() {
 
   useEffect(() => {
     async function loadFeaturedArticles() {
-      // Articles will be loaded from static resources page
-      setFeaturedArticles([]);
+      try {
+        const resources = await fetchFeaturedResources();
+        const formattedArticles = resources.map((resource: any) => ({
+          id: resource._id,
+          title: resource.title,
+          description: resource.description || 'No description available',
+          image: resource.thumbnail
+            ? urlForImage(resource.thumbnail).url()
+            : (resource.image ? urlForImage(resource.image).url() : '/gallery/gallery-1.jpg'),
+          category: resource.category || resource.resourceType || 'Article',
+          publishDate: resource.publishDate || resource.publishedAt,
+          slug: resource.slug?.current || resource._id,
+        }));
+        setFeaturedArticles(formattedArticles);
+      } catch (error) {
+        console.error('Error loading featured articles:', error);
+        setFeaturedArticles([]);
+      }
     }
 
     async function loadFeaturedGallery() {

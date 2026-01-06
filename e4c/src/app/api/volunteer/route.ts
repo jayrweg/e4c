@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     // Send email using Resend
     const { data, error } = await resend.emails.send({
       from: 'E4C Volunteer Applications <onboarding@resend.dev>',
-      to: 'rwegasirajackson11@gmail.com',
+      to: 'empoweredforchangetz@gmail.com',
       replyTo: email,
       subject: `New Volunteer Application: ${name}`,
       html: `

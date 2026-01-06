@@ -230,20 +230,6 @@ export const getFeaturedTestimonials = groq`
   }
 `
 
-// Team members queries
-export const getTeamMembers = groq`
-  *[_type == "teamMember"] | order(order asc, _createdAt desc) {
-    _id,
-    name,
-    role,
-    image,
-    bio,
-    email,
-    linkedin,
-    order
-  }
-`
-
 // Services queries
 export const getServices = groq`
   *[_type == "service"] | order(_createdAt desc) {
@@ -351,36 +337,3 @@ export const getJobBySlug = groq`
   }
 `
 
-// Page Banners queries
-export const getPageBannerByPage = groq`
-  *[_type == "pageBanner" && page == $page && isActive == true][0] {
-    _id,
-    title,
-    page,
-    heading,
-    subheading,
-    backgroundImage
-  }
-`
-
-export const getAllPageBanners = groq`
-  *[_type == "pageBanner" && isActive == true] {
-    _id,
-    title,
-    page,
-    heading,
-    subheading,
-    backgroundImage
-  }
-`
-
-// Approaches queries
-export const getApproaches = groq`
-  *[_type == "approach" && isActive == true] | order(order asc) {
-    _id,
-    title,
-    description,
-    image,
-    order
-  }
-`

@@ -1,16 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { fetchResources, fetchPageBanner } from '@/lib/api';
+import { fetchResources } from '@/lib/api';
 import { urlForImage } from '@/lib/sanity';
 import ResourcesClient from './ResourcesClient';
 
-// Header Banner Component
-const HeaderBanner = ({ banner }: { banner: any }) => {
-  const bannerImage = banner?.backgroundImage
-    ? urlForImage(banner.backgroundImage).url()
-    : '/gallery/gallery-1.jpg';
-  const heading = banner?.heading || 'Resources';
-  const subheading = banner?.subheading || 'Knowledge, insights, and tools to empower women and girls';
+// Header Banner Component (Static)
+const HeaderBanner = () => {
+  const bannerImage = '/gallery/gallery-1.jpg';
+  const heading = 'Resources';
+  const subheading = 'Knowledge, insights, and tools to empower women and girls';
 
   return (
     <section className="relative h-96 flex items-center justify-center overflow-hidden">
@@ -38,15 +36,11 @@ const HeaderBanner = ({ banner }: { banner: any }) => {
 
 // Main Resources Page Component (Server Component)
 export default async function Resources() {
-  // Fetch resources and page banner from Sanity CMS
+  // Fetch resources from Sanity CMS
   let resources = [];
-  let banner = null;
 
   try {
-    [resources, banner] = await Promise.all([
-      fetchResources(),
-      fetchPageBanner('resources')
-    ]);
+    resources = await fetchResources();
   } catch (error) {
     console.error('Error fetching data:', error);
   }
@@ -67,7 +61,7 @@ export default async function Resources() {
 
   return (
     <div className="min-h-screen">
-      <HeaderBanner banner={banner} />
+      <HeaderBanner />
       <ResourcesClient resources={formattedResources} />
     </div>
   );

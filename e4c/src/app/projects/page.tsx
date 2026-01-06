@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
+import { fetchProjects } from '@/lib/api';
+import { urlForImage } from '@/lib/sanity';
 import ProjectsClient from './ProjectsClient';
 
 // Header Banner Component
@@ -33,82 +33,35 @@ const HeaderBanner = () => {
   );
 };
 
-// Main Projects Page Component
-export default function Projects() {
-  // Use static project data
-  const fallbackProjects = [
-    {
-      id: '1',
-      title: 'Reproductive Health Education Program',
-      description: 'Comprehensive education programs for women and girls about reproductive health, family planning, and informed decision-making across 8 regions of Tanzania.',
-      image: '/gallery/gallery-1.jpg',
-      category: 'Reproductive Health',
-      status: 'Active',
-      impact: '500+ women reached',
-      slug: 'reproductive-health-education',
-      tags: ['reproductive-health', 'education'],
-    },
-    {
-      id: '2',
-      title: 'Disability Inclusion Initiative',
-      description: 'Creating accessible programs and support systems for women and girls with disabilities to access reproductive health services and information.',
-      image: '/gallery/gallery-3.jpg',
-      category: 'Disability Inclusion',
-      status: 'Active',
-      impact: '200+ women with disabilities',
-      slug: 'disability-inclusion-initiative',
-      tags: ['disability-inclusion', 'advocacy'],
-    },
-    {
-      id: '3',
-      title: 'Community Advocacy Network',
-      description: 'Building community support networks and advocating for policy changes that benefit women and girls across Tanzania.',
-      image: '/gallery/gallery-5.jpg',
-      category: 'Advocacy',
-      status: 'Active',
-      impact: '12% budget increase',
-      slug: 'community-advocacy-network',
-      tags: ['advocacy', 'education'],
-    },
-    {
-      id: '4',
-      title: 'Youth Empowerment Program',
-      description: 'Empowering young women and girls with life skills, reproductive health knowledge, and leadership training to become change agents in their communities.',
-      image: '/gallery/gallery-1.jpg',
-      category: 'Education',
-      status: 'Active',
-      impact: '300+ young women',
-      slug: 'youth-empowerment-program',
-      tags: ['education', 'reproductive-health'],
-    },
-    {
-      id: '5',
-      title: 'Healthcare Provider Training',
-      description: 'Training healthcare providers on inclusive practices and disability-friendly approaches to reproductive health services.',
-      image: '/gallery/gallery-3.jpg',
-      category: 'Education',
-      status: 'Completed',
-      impact: '150+ providers trained',
-      slug: 'healthcare-provider-training',
-      tags: ['education', 'disability-inclusion'],
-    },
-    {
-      id: '6',
-      title: 'Policy Advocacy Campaign',
-      description: 'Advocating for policy changes at the national level to improve reproductive health services and disability inclusion in healthcare.',
-      image: '/gallery/gallery-5.jpg',
-      category: 'Advocacy',
-      status: 'Ongoing',
-      impact: '17% budget increase',
-      slug: 'policy-advocacy-campaign',
-      tags: ['advocacy'],
-    },
-  ];
+// Main Projects Page Component (Server Component)
+export default async function Projects() {
+  // Fetch projects from Sanity CMS
+  let projects = [];
+
+  try {
+    projects = await fetchProjects();
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+  }
+
+  // Format projects data for the client component
+  const formattedProjects = projects.map((project: any) => ({
+    id: project._id,
+    title: project.title,
+    description: project.description || 'No description available',
+    image: project.thumbnail ? urlForImage(project.thumbnail).url() : (project.image ? urlForImage(project.image).url() : '/gallery/gallery-1.jpg'),
+    thumbnail: project.thumbnail ? urlForImage(project.thumbnail).url() : (project.image ? urlForImage(project.image).url() : '/gallery/gallery-1.jpg'),
+    category: project.category || 'General',
+    status: project.status || 'Active',
+    impact: project.impact || 'Impact data coming soon',
+    slug: project.slug?.current || project._id,
+    tags: project.tags || [],
+  }));
 
   return (
     <div className="min-h-screen">
       <HeaderBanner />
-      <ProjectsClient projects={fallbackProjects} />
+      <ProjectsClient projects={formattedProjects} />
     </div>
   );
 }

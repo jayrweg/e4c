@@ -10,9 +10,6 @@ import {
   getFeaturedGalleryImages,
   getJobs,
   getJobBySlug,
-  getPageBannerByPage,
-  getAllPageBanners,
-  getApproaches,
 } from './queries'
 
 // Helper function to handle fetch with timeout and error handling
@@ -69,18 +66,4 @@ export async function fetchJobs() {
 
 export async function fetchJobBySlug(slug: string) {
   return await safeFetch(getJobBySlug, { slug }, null)
-}
-
-// Page Banners
-export async function fetchPageBanner(page: string) {
-  return await safeFetch(getPageBannerByPage, { page }, null)
-}
-
-export async function fetchAllPageBanners() {
-  return await safeFetch(getAllPageBanners, undefined, [])
-}
-
-// Approaches
-export async function fetchApproaches() {
-  return await safeFetch(getApproaches, undefined, [])
 }
