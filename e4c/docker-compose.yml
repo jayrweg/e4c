@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  e4c-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SANITY_PROJECT_ID: ${NEXT_PUBLIC_SANITY_PROJECT_ID}
+        NEXT_PUBLIC_SANITY_DATASET: ${NEXT_PUBLIC_SANITY_DATASET:-production}
+        SANITY_API_TOKEN: ${SANITY_API_TOKEN}
+        RESEND_API_KEY: ${RESEND_API_KEY}
+    container_name: e4c-production
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID}
+      - NEXT_PUBLIC_SANITY_DATASET=${NEXT_PUBLIC_SANITY_DATASET:-production}
+      - SANITY_API_TOKEN=${SANITY_API_TOKEN}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - CONTACT_EMAIL=${CONTACT_EMAIL:-info@empowerforchange.org}
+      - DONATION_EMAIL=${DONATION_EMAIL:-info@empowerforchange.org}
+      - VOLUNTEER_EMAIL=${VOLUNTEER_EMAIL:-info@empowerforchange.org}
+    volumes:
+      - ./e4c/.env.local:/app/e4c/.env.local:ro
+    networks:
+      - e4c-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  e4c-network:
+    driver: bridge

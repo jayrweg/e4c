@@ -6,10 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "build:standalone": "next build && cp -r public .next/standalone/public && cp -r .next/static .next/standalone/.next/static",
+    "build:production": "NODE_ENV=production next build",
     "start": "next start",
+    "start:production": "NODE_ENV=production next start",
     "lint": "eslint",
     "setup-sanity": "node scripts/setup-sanity.js",
-    "studio": "next dev"
+    "studio": "next dev",
+    "docker:build": "docker build -t e4c-web .",
+    "docker:run": "docker run -p 3000:3000 e4c-web",
+    "docker:compose": "docker-compose up -d",
+    "docker:stop": "docker-compose down",
+    "deploy:check": "npm install && npm run build && echo 'Build successful! Ready to deploy.'"
   },
   "dependencies": {
     "@portabletext/react": "^4.0.3",
