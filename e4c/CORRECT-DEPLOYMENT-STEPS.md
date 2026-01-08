@@ -193,11 +193,15 @@ ls -la
 nano .env.production
 # (Add environment variables as shown above)
 
-# Step 6: Install Node.js 20 (if not installed)
+# Step 6: Install Node.js 20 LTS (IMPORTANT: Use 20 LTS, NOT 22!)
 node --version
-# If not 20.x:
+# Should show v20.x.x
+# If not installed or wrong version:
 nvm install 20
 nvm use 20
+
+# IMPORTANT: Use Node 20 LTS to avoid memory & compatibility issues
+# DO NOT use Node 22 - it causes problems with Next.js builds
 
 # Step 7: Install dependencies
 npm install
