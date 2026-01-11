@@ -41,7 +41,6 @@ const nextConfig: NextConfig = {
 
   // Fix Render monorepo detection warning
   output: 'standalone',
-  outputFileTracingRoot: undefined,
 
   // Reduce bundle size with modular imports
   modularizeImports: {
