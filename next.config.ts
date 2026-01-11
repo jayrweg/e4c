@@ -39,13 +39,6 @@ const nextConfig: NextConfig = {
   // Optimize production build
   productionBrowserSourceMaps: false,
 
-  // Reduce bundle size with modular imports
-  modularizeImports: {
-    'framer-motion': {
-      transform: 'framer-motion/dist/es/{{member}}',
-    },
-  },
-
   // Experimental performance features
   experimental: {
     optimizePackageImports: ['framer-motion', '@sanity/client'],
