@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const CTASection = () => {
   return (
-    <section className="py-20 bg-gradient-to-r from-orange-600 to-orange-700">
+    <section className="py-28 bg-gradient-to-r from-orange-600 to-orange-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -18,7 +18,7 @@ const CTASection = () => {
             Ready to Make a Difference?
           </h2>
           
-          <p className="text-xl text-orange-100 mb-12 max-w-3xl mx-auto">
+          <p className="text-xl text-orange-100 mb-16 max-w-3xl mx-auto">
             Join us in empowering women and girls of all abilities. Together, we can create lasting change and build a more equitable future.
           </p>
 
@@ -61,7 +61,7 @@ const CTASection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
-            className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
+            className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-10"
           >
             <div className="text-center">
               <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -100,7 +100,7 @@ const CTASection = () => {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             viewport={{ once: true }}
-            className="mt-16 pt-8 border-t border-orange-300"
+            className="mt-20 pt-10 border-t border-orange-300"
           >
             <p className="text-orange-100 text-lg">
               <span className="font-semibold">Contact us:</span> info@empowerforchange.org | +1 (555) 123-4567

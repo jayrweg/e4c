@@ -79,17 +79,17 @@ const FeaturedProjects = () => {
   };
 
   return (
-    <section ref={ref} className="py-20 bg-white">
+    <section ref={ref} className="py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={containerVariants}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
           <motion.h2
             variants={itemVariants}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-8"
           >
             Featured Projects
           </motion.h2>
@@ -109,16 +109,16 @@ const FeaturedProjects = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={containerVariants}
-          className="space-y-12"
+          className="space-y-24"
         >
           {projects.map((project, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 items-center`}
+              className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-14 items-center`}
             >
               <div className="flex-1">
-                <div className="relative h-80 rounded-2xl overflow-hidden shadow-lg">
+                <div className="relative h-96 rounded-2xl overflow-hidden shadow-lg">
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -186,7 +186,7 @@ const FeaturedProjects = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 1 }}
-          className="text-center mt-16"
+          className="text-center mt-20"
         >
           <Link
             href="/projects"

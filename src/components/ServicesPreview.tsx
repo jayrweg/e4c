@@ -86,7 +86,7 @@ const ServicesPreview = () => {
 
   if (!mounted) {
     return (
-      <section className="py-20 bg-gray-50">
+      <section className="py-28 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Our Services</h2>
@@ -100,17 +100,17 @@ const ServicesPreview = () => {
   }
 
   return (
-    <section ref={ref} className="py-20 bg-gray-50">
+    <section ref={ref} className="py-28 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={containerVariants}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
           <motion.h2
             variants={itemVariants}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-8"
           >
             Our Services
           </motion.h2>
@@ -130,7 +130,7 @@ const ServicesPreview = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
         >
           {services.map((service, index) => (
             <motion.div
@@ -153,7 +153,7 @@ const ServicesPreview = () => {
                   </div>
                 </div>
                 
-                <div className="p-6">
+                <div className="p-8">
                   <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors duration-300">
                     {service.title}
                   </h3>
@@ -192,7 +192,7 @@ const ServicesPreview = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-12"
+          className="text-center mt-20"
         >
           <Link
             href="/services"

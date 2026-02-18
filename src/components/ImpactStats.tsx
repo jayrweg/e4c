@@ -80,9 +80,9 @@ const ImpactStats = () => {
 
   if (!mounted) {
     return (
-      <section className="py-20 bg-gradient-to-r from-orange-600 to-orange-700">
+      <section className="py-28 bg-gradient-to-r from-orange-600 to-orange-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Our Impact</h2>
             <p className="text-xl text-orange-100 max-w-3xl mx-auto">
               Transforming lives through dedicated advocacy, education, and support for women's reproductive health rights
@@ -101,11 +101,11 @@ const ImpactStats = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={containerVariants}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
           <motion.h2
             variants={itemVariants}
-            className="text-4xl md:text-5xl font-bold text-white mb-6"
+            className="text-4xl md:text-5xl font-bold text-white mb-8"
           >
             Our Impact
           </motion.h2>
@@ -121,7 +121,7 @@ const ImpactStats = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
         >
           {stats.map((stat, index) => (
             <motion.div
@@ -163,7 +163,7 @@ const ImpactStats = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-16"
+          className="text-center mt-20"
         >
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
             <h3 className="text-2xl font-bold text-white mb-4">
