@@ -39,7 +39,7 @@ const HeroSection = ({ slides }: { slides: any[] }) => {
 
       {/* Content - Positioned at bottom */}
       <div className="absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black/80 via-black/60 to-transparent py-12">
-        <div className="max-w-12xl mx-auto px-10 sm:px-10 lg:px-12 text-center text-white">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 text-center text-white">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             {/* Slideshow Message */}
             <motion.h2
@@ -54,9 +54,9 @@ const HeroSection = ({ slides }: { slides: any[] }) => {
 
             {/* Static Description */}
             <p className="text-sm md:text-lg mb-7 max-w-8xl mx-auto leading-relaxed text-gray-200">
-              We are a women's rights organization that seeks to empower women and girls
+              We are women leading positive change — empowering women and girls
               of all abilities to realize their reproductive health goals by providing them
-              with tools to make informed decisions and creating enabling environment for them to fulfill their potentials.
+              with tools to make informed decisions and creating enabling environments for them to fulfill their potentials.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -168,7 +168,7 @@ const ImpactStats = () => {
 
   return (
     <section id="impact-stats" className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -211,7 +211,7 @@ const ImpactStats = () => {
 const AboutPreview = () => {
   return (
     <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -220,10 +220,10 @@ const AboutPreview = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              About Empowered for Change (E4C)
+              About Empowered for Change
             </h2>
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Empowered for Change (E4C) is a non-governmental organization registered under the non-governmental organizations ACT, 2002 on 25th February 2022 with registration number ooNGO/R/2844 to operate in Tanzania mainland.
+              Empowered for Change is a non-governmental organization registered under the non-governmental organizations ACT, 2002 on 25th February 2022 with registration number ooNGO/R/2844 to operate in Tanzania mainland.
             </p>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
               We work with the government and collaborate with other partners to ensure increased access to correct information regarding sexual and reproductive issues and empower women and girls to exercise full autonomy regarding their sexual and reproductive health.
@@ -268,7 +268,7 @@ const AboutPreview = () => {
 const NewsAndArticles = ({ articles = [] }: { articles?: any[] }) => {
   return (
     <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -378,7 +378,7 @@ const TeamSection = ({ teamMembers }: { teamMembers: any[] }) => {
 
   return (
     <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -521,7 +521,7 @@ const TeamSection = ({ teamMembers }: { teamMembers: any[] }) => {
 const GalleryPreview = ({ galleryImages = [] }: { galleryImages?: any[] }) => {
   return (
     <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -592,7 +592,7 @@ const GalleryPreview = ({ galleryImages = [] }: { galleryImages?: any[] }) => {
 const CallToAction = () => {
   return (
     <section className="py-20 bg-gradient-to-r from-orange-600 to-orange-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -33,7 +33,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-12">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
           {/* Logo and Description */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
@@ -46,7 +46,7 @@ const Footer = () => {
                   className="object-contain"
                 />
               </div>
-              <span className="text-xl font-bold">EMPOWERED FOR CHANGE (E4C)</span>
+              <span className="text-xl font-bold">EMPOWERED FOR CHANGE</span>
             </div>
             
           </div>
@@ -125,9 +125,9 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <h4 className="font-semibold mb-2">Contact Info</h4>
-              <p className="text-gray-300">empoweredforchangetx@gmail.com</p>
-              <p className="text-gray-300 mb-3">+255(0) 767 439217</p>
-              <div className="flex space-x-3 mt-3">
+              <p className="text-gray-300">empoweredforchangetz@gmail.com</p>
+              <p className="text-gray-300 mb-3">+255 69 321 0740</p>
+              <div className="flex space-x-5 mt-3">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
@@ -168,7 +168,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-6 text-center">
           <p className="text-gray-400">
-            © {currentYear} EMPOWERED FOR CHANGE (E4C). All rights reserved. | Privacy Policy | Terms of Service
+            © {currentYear} EMPOWERED FOR CHANGE. All rights reserved. | Privacy Policy | Terms of Service
           </p>
         </div>
       </div>

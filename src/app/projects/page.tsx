@@ -21,7 +21,7 @@ const HeaderBanner = () => {
         />
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
-      <div className="relative z-10 text-center text-white px-4">
+      <div className="relative z-10 text-center text-white px-6 sm:px-10">
         <h1 className="text-4xl md:text-6xl font-bold mb-4">
           {heading}
         </h1>

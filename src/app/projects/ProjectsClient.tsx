@@ -64,7 +64,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
 const ProjectStats = () => {
   const stats = [
     {
-      number: '8',
+      number: '3',
       label: 'Active Projects',
       icon: '🚀',
     },
@@ -87,7 +87,7 @@ const ProjectStats = () => {
 
   return (
     <section className="py-16 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -131,7 +131,7 @@ const ProjectStats = () => {
 const CallToAction = () => {
   return (
     <section className="py-16 md:py-24 bg-gradient-to-r from-orange-600 via-orange-600 to-orange-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -179,18 +179,15 @@ export default function ProjectsClient({ projects }: { projects: any[] }) {
   return (
     <>
       <section className="py-16 md:py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-12 md:mb-16"
+            className="text-center mb-14 md:mb-20"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
-              Our Impact Through Projects
-            </h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-10xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Discover the innovative programs and initiatives that are making a real difference in the lives of women and girls across Tanzania
             </p>
           </motion.div>

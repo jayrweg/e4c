@@ -15,12 +15,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EMPOWERED FOR CHANGE (E4C) - Women's Rights Organization",
+  title: "EMPOWERED FOR CHANGE - Women Leading Positive Change",
   description: "Empowering women and girls of all abilities to realize their reproductive health goals by providing tools for informed decisions and creating enabling environments.",
-  keywords: "women's rights, reproductive health, gender equality, empowerment, disability inclusion, Tanzania, SRH services",
-  authors: [{ name: "EMPOWERED FOR CHANGE (E4C)" }],
+  keywords: "women empowerment, reproductive health, gender equality, positive change, disability inclusion, Tanzania, SRH services",
+  authors: [{ name: "EMPOWERED FOR CHANGE" }],
+  icons: {
+    icon: '/logo/logo.png',
+    apple: '/logo/logo.png',
+  },
   openGraph: {
-    title: "EMPOWERED FOR CHANGE (E4C) - Women's Rights Organization",
+    title: "EMPOWERED FOR CHANGE - Women Leading Positive Change",
     description: "Empowering women and girls of all abilities to realize their reproductive health goals through informed decisions and enabling environments.",
     type: "website",
     locale: "en_US",
@@ -38,7 +42,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <Navbar />
-        <main className="flex-1 pt-20 w-full">
+        <main className="flex-1 pt-20 w-full overflow-x-hidden">
           {children}
         </main>
         <Footer />

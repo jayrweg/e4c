@@ -45,7 +45,7 @@ const Navbar = () => {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
@@ -60,9 +60,9 @@ const Navbar = () => {
             </div>
             <div className="hidden sm:block">
               <span className="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors duration-300">
-                EMPOWERED FOR CHANGE (E4C)
+                EMPOWERED FOR CHANGE
               </span>
-              <div className="text-xs text-gray-500 -mt-1">Women's Rights Organization</div>
+              <div className="text-xs text-gray-500 -mt-1">Women Leading Positive Change</div>
             </div>
           </Link>
 

@@ -22,7 +22,7 @@ const HeaderBanner = () => {
         />
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
-      <div className="relative z-10 text-center text-white px-4">
+      <div className="relative z-10 text-center text-white px-6 sm:px-10">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -101,7 +101,7 @@ const ContactForm = () => {
 
   return (
     <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <motion.div
@@ -276,7 +276,7 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-1">Phone</h3>
-                  <p className="text-gray-600">+255(0) 767 439217</p>
+                  <p className="text-gray-600">+255 69 321 0740</p>
                 </div>
               </div>
 
