@@ -34,10 +34,6 @@
 
 html {
   scroll-behavior: smooth;
-  /* Reserve 8px on the left for the custom scroll indicator, and 8px on
-     the right for the native scrollbar — content stays centered with no
-     manual padding shifts. */
-  scrollbar-gutter: stable both-edges;
 }
 
 body {

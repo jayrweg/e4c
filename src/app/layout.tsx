@@ -103,7 +103,7 @@ export default function RootLayout({
       >
         <LeftScrollIndicator />
         <Navbar />
-        <main className="flex-1 pt-20 w-full overflow-x-hidden">
+        <main className="flex-1 pt-20 w-full overflow-x-hidden pl-2">
           {children}
         </main>
         <Footer />
