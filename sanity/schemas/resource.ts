@@ -127,6 +127,19 @@ export const resource = defineType({
       description: 'External link to the resource',
     }),
     defineField({
+      name: 'videoUrl',
+      title: 'Video URL',
+      type: 'url',
+      description: 'Link to a video resource (YouTube, Vimeo, etc.)',
+    }),
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Optional tags for filtering and search',
+    }),
+    defineField({
       name: 'fileUpload',
       title: 'File Upload',
       type: 'file',

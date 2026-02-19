@@ -52,16 +52,47 @@ export const gallery = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'caption',
+      title: 'Caption',
+      type: 'string',
+      description: 'Short caption displayed with the image',
+    }),
+    defineField({
       name: 'capturedDate',
       title: 'Captured Date',
       type: 'date',
       description: 'When the photo was taken',
     }),
     defineField({
+      name: 'date',
+      title: 'Date',
+      type: 'date',
+      description: 'Alternative date field (same as Captured Date)',
+    }),
+    defineField({
+      name: 'location',
+      title: 'Location',
+      type: 'string',
+      description: 'Where the photo was taken',
+    }),
+    defineField({
       name: 'photographer',
       title: 'Photographer',
       type: 'string',
       description: 'Name of the photographer or credit',
+    }),
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Optional tags for filtering',
+    }),
+    defineField({
+      name: 'publishedAt',
+      title: 'Published At',
+      type: 'datetime',
+      description: 'When this image was published',
     }),
     defineField({
       name: 'featured',

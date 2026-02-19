@@ -12,10 +12,12 @@ import {
   getJobBySlug,
 } from './queries'
 
-// Helper function to handle fetch with timeout and error handling
+// Helper function to handle fetch with timeout and error handling.
+// { cache: 'no-store' } bypasses Next.js data cache permanently so Sanity
+// edits appear on the site immediately without needing a rebuild.
 async function safeFetch<T>(query: string, params?: any, fallback: T = [] as T): Promise<T> {
   try {
-    const result = await client.fetch(query, params)
+    const result = await client.fetch(query, params, { cache: 'no-store' })
     return result || fallback
   } catch (error) {
     console.error('Sanity fetch error:', error)

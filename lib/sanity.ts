@@ -1,16 +1,22 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 
-// Sanity client – useCdn: false so Studio edits appear on the site immediately
+// Sanity client – useCdn: false + cache: 'no-store' so Sanity Studio edits
+// appear on the site immediately without a rebuild or cache flush.
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'your-project-id',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  useCdn: false, // Always fetch fresh data so Studio edits show up right away
+  useCdn: false,
   apiVersion: '2024-01-01',
   perspective: 'published',
   stega: false,
   requestTagPrefix: 'e4c',
   timeout: 30000,
+  // Bypass Next.js data cache – ensures every fetch goes directly to the
+  // Sanity API so published changes are visible without a redeployment.
+  fetchOptions: {
+    cache: 'no-store',
+  },
 })
 
 const builder = imageUrlBuilder(client)
@@ -37,4 +43,7 @@ export const staticClient = createClient({
   perspective: 'published',
   requestTagPrefix: 'e4c',
   timeout: 30000,
+  fetchOptions: {
+    cache: 'no-store',
+  },
 })
