@@ -337,3 +337,14 @@ export const getJobBySlug = groq`
   }
 `
 
+// Our Approach queries
+export const getApproaches = groq`
+  *[_type == "approach"] | order(order asc) {
+    _id,
+    title,
+    description,
+    image,
+    order
+  }
+`
+

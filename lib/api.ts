@@ -10,6 +10,7 @@ import {
   getFeaturedGalleryImages,
   getJobs,
   getJobBySlug,
+  getApproaches,
 } from './queries'
 
 // Helper function to handle fetch with timeout and error handling.
@@ -68,4 +69,9 @@ export async function fetchJobs() {
 
 export async function fetchJobBySlug(slug: string) {
   return await safeFetch(getJobBySlug, { slug }, null)
+}
+
+// Our Approach
+export async function fetchApproaches() {
+  return await safeFetch(getApproaches, undefined, [])
 }

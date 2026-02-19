@@ -2,7 +2,9 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { urlForImage } from '@/lib/sanity';
+import { fetchApproaches } from '@/lib/api';
 
 // Header Banner Component
 const HeaderBanner = () => {
@@ -220,30 +222,37 @@ const OurValues = () => {
   );
 };
 
-// Our Approach Component
-const OurApproach = () => {
-  const displayApproaches = [
-    {
-      title: 'Training and Mentorship',
-      description: 'We have designed simplified training materials grounded on adult learning theories and we use age appropriate methodologies to make learning more joyful and enjoyable for young people. Our training packages incorporate on-going mentorship to ensure that gained knowledge is sustained and skills are put into practice and become part of day to day life of women and girls.',
-      image: '/about/training.jpg',
-    },
-    {
-      title: 'Structured Dialogues',
-      description: 'Our learning approaches are grounded on theories from various scholars that, learning cannot occur without dialogue and reflection. Reading and listening are not enough. Interaction is required. We believe that, the process of putting ideas into words is itself an important form of active engagement with the content, and a way of growing knowledge (even without feedback).',
-      image: '/about/dialogue.png',
-    },
-    {
-      title: 'Domestic Resource Mobilization',
-      description: 'Our organization strongly believe that domestic government spending on family planning should become the mainstay of a country\'s family planning program, providing a budgeted flow of funds for services and staff. Our advocacy efforts have therefore focused on working with regional, districts and health facilities to increase allocations, disbursement and utilization of resources for family planning, adolescents\' friendly SRH services and SRH services for people with disabilities.',
-      image: '/about/domestic.png',
-    },
-    {
-      title: 'Strengthening Women-Led CSOs',
-      description: 'Our organization believes that women and girls are experts of their own needs and therefore meaningful engagement and involvement of women in policy development, planning, budgeting and all SRH interventions is paramount. Our interventions are focused on building the capacity of women and girls led civil society organizations (CSOs) to lead and fully participate in SRH policy making and programming. We strengthen the ability of CSOs to advocate for quality and equitable SRH information and services and hold the government accountable on its SRH commitments.',
-      image: '/about/women.jpg',
-    },
-  ];
+// Static fallback approaches (used when Sanity has no data yet)
+const staticApproaches = [
+  {
+    title: 'Training and Mentorship',
+    description: 'We have designed simplified training materials grounded on adult learning theories and we use age appropriate methodologies to make learning more joyful and enjoyable for young people. Our training packages incorporate on-going mentorship to ensure that gained knowledge is sustained and skills are put into practice and become part of day to day life of women and girls.',
+    image: '/about/training.jpg',
+    sanityImage: null,
+  },
+  {
+    title: 'Structured Dialogues',
+    description: 'Our learning approaches are grounded on theories from various scholars that, learning cannot occur without dialogue and reflection. Reading and listening are not enough. Interaction is required. We believe that, the process of putting ideas into words is itself an important form of active engagement with the content, and a way of growing knowledge (even without feedback).',
+    image: '/about/dialogue.png',
+    sanityImage: null,
+  },
+  {
+    title: 'Domestic Resource Mobilization',
+    description: 'Our organization strongly believe that domestic government spending on family planning should become the mainstay of a country\'s family planning program, providing a budgeted flow of funds for services and staff. Our advocacy efforts have therefore focused on working with regional, districts and health facilities to increase allocations, disbursement and utilization of resources for family planning, adolescents\' friendly SRH services and SRH services for people with disabilities.',
+    image: '/about/domestic.png',
+    sanityImage: null,
+  },
+  {
+    title: 'Strengthening Women-Led CSOs',
+    description: 'Our organization believes that women and girls are experts of their own needs and therefore meaningful engagement and involvement of women in policy development, planning, budgeting and all SRH interventions is paramount. Our interventions are focused on building the capacity of women and girls led civil society organizations (CSOs) to lead and fully participate in SRH policy making and programming. We strengthen the ability of CSOs to advocate for quality and equitable SRH information and services and hold the government accountable on its SRH commitments.',
+    image: '/about/women.jpg',
+    sanityImage: null,
+  },
+];
+
+// Our Approach Component — fetches live data from Sanity, falls back to static
+const OurApproach = ({ approaches }: { approaches: any[] }) => {
+  const displayApproaches = approaches.length > 0 ? approaches : staticApproaches;
 
   return (
     <section className="py-20 bg-gray-50">
@@ -264,33 +273,42 @@ const OurApproach = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {displayApproaches.map((approach, index) => (
-            <motion.div
-              key={approach.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="relative h-48">
-                <Image
-                  src={approach.image}
-                  alt={approach.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  {approach.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {approach.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+          {displayApproaches.map((approach: any, index: number) => {
+            // Resolve image: prefer Sanity image, fall back to static path
+            const imgSrc = approach.sanityImage
+              ? urlForImage(approach.sanityImage)?.width(800).height(400).url()
+              : approach.image;
+
+            return (
+              <motion.div
+                key={approach.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                {imgSrc && (
+                  <div className="relative h-48">
+                    <Image
+                      src={imgSrc}
+                      alt={approach.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {approach.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {approach.description}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -501,13 +519,34 @@ const TeamSection = () => {
 
 // Main About Page Component
 export default function About() {
+  const [approaches, setApproaches] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchApproaches()
+      .then((data: any[]) => {
+        if (data && data.length > 0) {
+          // Map Sanity documents to the shape OurApproach expects
+          const formatted = data.map((item: any) => ({
+            title: item.title,
+            description: item.description,
+            image: null,            // not used when sanityImage is present
+            sanityImage: item.image, // raw Sanity image reference
+          }));
+          setApproaches(formatted);
+        }
+      })
+      .catch(() => {
+        // Network / Sanity error — OurApproach will use static fallback
+      });
+  }, []);
+
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
       <HeaderBanner />
       <OrganizationStory />
       <MissionVision />
       <OurValues />
-      <OurApproach />
+      <OurApproach approaches={approaches} />
       <TeamSection />
     </div>
   );
