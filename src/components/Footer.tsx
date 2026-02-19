@@ -127,17 +127,18 @@ const Footer = () => {
               <h4 className="font-semibold mb-2">Contact Info</h4>
               <p className="text-gray-300">empoweredforchangetz@gmail.com</p>
               <p className="text-gray-300 mb-3">+255 69 321 0740</p>
-              <div className="flex space-x-5 mt-3">
+              <div className="flex gap-5 mt-4 flex-wrap">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
                     href={social.href}
-                    className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
+                    className="text-gray-400 hover:text-orange-500 transition-colors duration-200 flex flex-col items-center gap-1"
                     aria-label={social.name}
                   >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
                       <path d={social.icon} />
                     </svg>
+                    <span className="text-xs text-gray-500">{social.name}</span>
                   </a>
                 ))}
               </div>

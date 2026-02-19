@@ -3,6 +3,9 @@ import { fetchProjects } from '@/lib/api';
 import { urlForImage } from '@/lib/sanity';
 import ProjectsClient from './ProjectsClient';
 
+// Always fetch fresh data from Sanity on every request
+export const revalidate = 0;
+
 // Header Banner Component
 const HeaderBanner = () => {
   const bannerImage = '/gallery/gallery-2.jpg';

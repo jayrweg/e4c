@@ -34,14 +34,14 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
           </span>
         </div>
       </div>
-      <div className="p-6 md:p-7">
-        <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors duration-300 line-clamp-2">
+      <div className="p-7 md:p-9">
+        <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 group-hover:text-orange-600 transition-colors duration-300 line-clamp-2">
           {project.title}
         </h3>
-        <p className="text-gray-600 mb-5 leading-relaxed line-clamp-3 text-sm md:text-base">
+        <p className="text-gray-600 mb-6 leading-relaxed line-clamp-3 text-sm md:text-base">
           {project.description}
         </p>
-        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+        <div className="flex items-center justify-between pt-5 border-t border-gray-100">
           <div className="text-sm text-gray-500">
             <span className="font-semibold text-gray-700">Impact:</span> {project.impact}
           </div>
@@ -103,7 +103,7 @@ const ProjectStats = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -187,12 +187,12 @@ export default function ProjectsClient({ projects }: { projects: any[] }) {
             viewport={{ once: true }}
             className="text-center mb-14 md:mb-20"
           >
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg text-gray-600 mx-auto leading-relaxed">
               Discover the innovative programs and initiatives that are making a real difference in the lives of women and girls across Tanzania
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12">
             {projects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
             ))}

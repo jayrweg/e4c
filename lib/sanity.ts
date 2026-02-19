@@ -1,20 +1,16 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 
-// Optimized Sanity client with caching and performance settings
+// Sanity client – useCdn: false so Studio edits appear on the site immediately
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'your-project-id',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  // Use CDN for faster reads (cached at edge, 5-10x faster)
-  useCdn: true,
+  useCdn: false, // Always fetch fresh data so Studio edits show up right away
   apiVersion: '2024-01-01',
-  // Reduce network overhead
   perspective: 'published',
-  // Enable stega for faster image loading
   stega: false,
-  // Add timeout to prevent hanging requests
   requestTagPrefix: 'e4c',
-  timeout: 30000, // 30 second timeout (increased for cold starts)
+  timeout: 30000,
 })
 
 const builder = imageUrlBuilder(client)
@@ -33,13 +29,12 @@ export function urlForImage(source: any) {
     .quality(80) // Good balance between quality and size
 }
 
-// Cached client for static pages (revalidate every 60 seconds)
 export const staticClient = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'your-project-id',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  useCdn: true,
+  useCdn: false,
   apiVersion: '2024-01-01',
   perspective: 'published',
   requestTagPrefix: 'e4c',
-  timeout: 30000, // 30 second timeout (increased for cold starts)
+  timeout: 30000,
 })
