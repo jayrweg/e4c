@@ -194,9 +194,7 @@ export default function ProjectsClient({ projects }: { projects: any[] }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12">
             {projects.map((project, index) => (
-              <div key={project.id} className={project.title === 'HEAD Movement' ? 'lg:col-start-3' : ''}>
-                <ProjectCard project={project} index={index} />
-              </div>
+              <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </div>
 
