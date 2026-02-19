@@ -250,7 +250,7 @@ const AboutPreview = () => {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <Image
-                src="/about/slide-2.jpg"
+                src="/about/about-preview.jpg"
                 alt="Women supporting each other"
                 width={600}
                 height={400}
@@ -532,8 +532,8 @@ const GalleryPreview = ({ galleryImages = [] }: { galleryImages?: any[] }) => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Our Gallery
           </h2>
-          <p className="text-xl text-gray-600 max-w-1xl mx-auto">
-            Moments of impact, empowerment, and positive change in our communities
+          <p className="text-xl text-gray-600 mx-auto text-center whitespace-nowrap overflow-hidden text-ellipsis">
+            Explore our gallery to see the faces, places, and moments that define our mission to empower women and girls
           </p>
         </motion.div>
 

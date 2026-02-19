@@ -3,6 +3,7 @@ import { event } from './event'
 import { resource } from './resource'
 import { gallery } from './gallery'
 import { job } from './job'
+import { approach } from './approach'
 
 export const schemaTypes = [
   project,
@@ -10,4 +11,5 @@ export const schemaTypes = [
   resource,
   gallery,
   job,
+  approach,
 ]
