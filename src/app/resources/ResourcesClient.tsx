@@ -110,9 +110,6 @@ export default function ResourcesClient({ resources }: { resources: any[] }) {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Knowledge Hub
-          </h2>
           <p className="text-xl text-gray-600 max-w-8xl mx-auto">
             Access our collection of articles, research, toolkits, and guides designed to empower women and girls with knowledge and resources
           </p>
